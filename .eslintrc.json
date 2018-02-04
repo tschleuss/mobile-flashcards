@@ -1,0 +1,61 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:jsx-a11y/recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings"
+    ],
+    "env": {
+        "node": true,
+        "es6": true,
+        "browser": true,
+        "mocha": true,
+        "react-native/react-native": true
+    },
+    "plugins": [
+        "react",
+        "react-native",
+        "jsx-a11y",
+        "import"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2017,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "modules": true,
+            "jsx": true,
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "rules": {
+        "comma-dangle": ["error", "never"],
+        "no-const-assign": ["error"],
+        "no-extra-semi": ["error"],
+        "semi": ["error", "never"],
+        "no-fallthrough": ["error"],
+        "no-empty": ["error"],
+        "no-mixed-spaces-and-tabs": ["error"],
+        "no-redeclare": ["error"],
+        "no-this-before-super": ["error"],
+        "no-undef": ["error"],
+        "no-unreachable": ["error"],
+        "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }],
+        "no-use-before-define": ["error", { "functions": false, "classes": false, "variables": true }],
+        "constructor-super": ["error"],
+        "curly": ["error", "all"],
+        "eqeqeq": ["error", "always"],
+        "func-names": ["error", "never"],
+        "valid-typeof": ["error"],
+        "no-console": ["error"],
+        "strict": ["error", "safe"],
+        "camelcase": ["error", { "properties": "always" }],
+        "arrow-parens": ["error", "as-needed"],
+        "object-shorthand": ["error", "always", { "avoidQuotes": true, "ignoreConstructors": true }],
+        "arrow-body-style": ["error", "as-needed"],
+        "react-native/no-unused-styles": ["error"],
+        "react-native/split-platform-components": ["error"],
+        "react-native/no-inline-styles": ["error"],
+        "react-native/no-color-literals": ["error"]
+    }
+}
