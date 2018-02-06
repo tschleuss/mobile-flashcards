@@ -6,7 +6,7 @@ export default function DeckListItemView({ item }) {
     return (
         <View style={styles.row}>
             <View style={styles.container}>
-                <Text style={{fontSize: 18, color: '#ccc'}}>{item.title} ({item.cards.length})</Text>
+                <Text style={{fontSize: 18, color: '#bbb'}}>{item.title} ({item.cards.length})</Text>
             </View>
         </View>
     )

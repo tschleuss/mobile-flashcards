@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FlatList, View, TouchableHighlight } from 'react-native'
+import { FlatList, View, TouchableHighlight, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { Entypo } from '@expo/vector-icons'
 import styles from './styles'
@@ -8,7 +8,15 @@ import DeckListItemView from '../../components/DeckListItemView'
 class DeckList extends Component {
 
     renderItem({ item }) {
-        return <DeckListItemView item={item} />
+        return (
+            <TouchableOpacity 
+                activeOpacity={.8} 
+                onPress={() => {
+                    this.props.navigation.navigate('DeckView', { deckId: 1 })
+                }}>
+                <DeckListItemView item={item}/>
+            </TouchableOpacity>
+        )
     }
 
     keyExtractor(item, index) {
@@ -21,8 +29,8 @@ class DeckList extends Component {
                 <FlatList
                     data={this.props.decks}
                     extraData={this.state}
-                    keyExtractor={this.keyExtractor}
-                    renderItem={this.renderItem}
+                    keyExtractor={this.keyExtractor.bind(this)}
+                    renderItem={this.renderItem.bind(this)}
                 />
                 <TouchableHighlight 
                     style={styles.addButton}
@@ -41,26 +49,7 @@ class DeckList extends Component {
 
 // Test
 function mapStateToProps(decks) {
-    return {
-        decks: [{
-            title: 'React',
-            cards: [{
-                    question: 'What is React?',
-                    answer: 'A library for managing user interfaces'
-                },
-                {
-                    question: 'Where do you make Ajax requests in React?',
-                    answer: 'The componentDidMount lifecycle event'
-                }
-            ]
-        }, {
-            title: 'JavaScript',
-            cards: [{
-                question: 'What is a closure?',
-                answer: 'The combination of a function and the lexical environment within which that function was declared.'
-            }]
-        }]
-    }
+    return { decks }
 }
 
 export default connect(mapStateToProps)(DeckList)

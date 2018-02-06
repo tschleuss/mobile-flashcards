@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import reducer from './reducers'
 import DeckList from './screens/DeckList'
 import { Constants } from 'expo'
+import { MainNavigator } from './config/navigation'
 
 export default class App extends Component {
 
@@ -17,10 +18,10 @@ export default class App extends Component {
         return (
             <Provider store={this.store}>
                 <View style={{flex: 1}}>
-                    <View style={{backgroundColor: '#32cdff', height: Constants.statusBarHeight }}>
+                    {/* <View style={{backgroundColor: '#32cdff', height: Constants.statusBarHeight }}>
                         <StatusBar translucent barStyle='light-content'/>
-                    </View>
-                    <DeckList />
+                    </View> */}
+                    <MainNavigator />
                 </View>
             </Provider>
         )
