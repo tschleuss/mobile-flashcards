@@ -1,18 +1,20 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-    row: {
-        paddingBottom: 35,
-        paddingLeft: 15,
-        paddingRight: 15
+    deck: {
+        position: 'relative',
+        flex: 1
     },
-    container: {
+    card: {
+        left: 0,
+        right: 0,
+        minHeight: 50,
+        position: 'absolute',
         backgroundColor: '#fff',
         borderRadius: 10,
         borderWidth: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        height: 50,
         shadowColor: 'rgba(0, 0, 0, .20)',
         shadowOpacity: 0.8,
         shadowRadius: 14,

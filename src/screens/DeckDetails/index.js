@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { FlatList, View, TouchableHighlight, Text } from 'react-native'
+import { View, Text, TouchableHighlight, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import { Entypo } from '@expo/vector-icons'
+import { Entypo, FontAwesome } from '@expo/vector-icons'
 import styles from './styles'
 import DeckListItemView from '../../components/DeckListItemView'
+import CardStack from '../../components/CardStack'
 
 class DeckDetails extends Component {
 
@@ -12,19 +13,21 @@ class DeckDetails extends Component {
     }
 
     keyExtractor(item, index) {
-        return item.title;
+        return item.title
     }
 
     render() {
         return (
             <View style={[{backgroundColor:'#32cdff',flex: 1}, styles.screeen]}>
-                <View style={styles.deck}>
-                    <View style={[{zIndex:10}, styles.card]}>
-                        <Text>carta 1</Text>
-                    </View>
-                    <View style={[{zIndex:9, marginTop:8}, styles.card]} />
-                    <View style={[{zIndex:8, marginTop:16}, styles.card]} />
-                </View>
+                <CardStack height={200}>
+                    <TouchableOpacity 
+                        activeOpacity={.6} 
+                        onPress={() => console.log('edit deck')}
+                        style={{position:'absolute', top:10, right:10}}>
+                        <FontAwesome name="gear" size={32} style={{color:'#ccc'}}/>
+                    </TouchableOpacity>
+                    <Text>carta top</Text>
+                </CardStack>
                 <TouchableHighlight 
                     style={styles.addButton}
                     underlayColor='#41567a' 
@@ -35,12 +38,6 @@ class DeckDetails extends Component {
                         color={'#fff'}
                         style={{marginTop:5}}/>
                 </TouchableHighlight>
-                {/* <FlatList
-                    data={this.props.decks}
-                    extraData={this.state}
-                    keyExtractor={this.keyExtractor}
-                    renderItem={this.renderItem}
-                />*/}
             </View>
         )
     }

@@ -31,6 +31,7 @@ class DeckList extends Component {
                     extraData={this.state}
                     keyExtractor={this.keyExtractor.bind(this)}
                     renderItem={this.renderItem.bind(this)}
+                    style={{paddingTop:20}}
                 />
                 <TouchableHighlight 
                     style={styles.addButton}
