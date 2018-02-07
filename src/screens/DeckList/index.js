@@ -1,20 +1,27 @@
 import React, { Component } from 'react'
-import { FlatList, View, TouchableHighlight, TouchableOpacity } from 'react-native'
+import { FlatList, Text, View, TouchableHighlight, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { Entypo } from '@expo/vector-icons'
 import styles from './styles'
 import DeckListItemView from '../../components/DeckListItemView'
+import CardStack from '../../components/CardStack'
 
 class DeckList extends Component {
+
+    openDeckDetails() {
+        this.props.navigation.navigate('DeckView', { deckId: 1 })
+    }
 
     renderItem({ item }) {
         return (
             <TouchableOpacity 
                 activeOpacity={.8} 
-                onPress={() => {
-                    this.props.navigation.navigate('DeckView', { deckId: 1 })
-                }}>
-                <DeckListItemView item={item}/>
+                onPress={this.openDeckDetails.bind(this)}>
+                <View style={styles.row}>
+                    <CardStack distance={5}>
+                        <Text style={{fontSize: 18, color: '#bbb'}}>{item.title} ({item.cards.length})</Text>
+                    </CardStack>
+                </View>
             </TouchableOpacity>
         )
     }

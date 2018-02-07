@@ -5,6 +5,7 @@ import DeckView from '../screens/DeckView'
 import DeckDetails from '../screens/DeckDetails'
 import DeckCards from '../screens/DeckCards'
 import DeckQuiz from '../screens/DeckQuiz'
+import DeckEdit from '../screens/DeckEdit'
 
 export const MainNavigator = StackNavigator({
     DeckList: {
