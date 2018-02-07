@@ -18,6 +18,7 @@ export default class App extends Component {
         return (
             <Provider store={this.store}>
                 <View style={{flex: 1}}>
+                    <StatusBar barStyle="light-content"/>
                     {/* <View style={{backgroundColor: '#32cdff', height: Constants.statusBarHeight }}>
                         <StatusBar translucent barStyle='light-content'/>
                     </View> */}
