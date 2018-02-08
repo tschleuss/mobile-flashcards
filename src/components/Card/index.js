@@ -11,11 +11,11 @@ class Card extends Component {
     }
 
     renderFront() {
-        const { flip, front, style, children } = this.props
+        const { flip, front, children } = this.props
         return (
             flip ?
             <TouchableOpacity 
-                style={{flex:1}} 
+                style={{flex:1}}
                 activeOpacity={1} 
                 onPress={() => {this.flip()}}>
                 <View style={[styles.card]}>{front}</View>
@@ -25,10 +25,10 @@ class Card extends Component {
     }
 
     renderBack() {
-        const { back, style } = this.props
+        const { back } = this.props
         return (
             <TouchableOpacity 
-                style={{flex:1}} 
+                style={{flex:1}}
                 activeOpacity={1} 
                 onPress={() => {this.flip()}}>
                 <View style={[styles.card]}>{back}</View>
@@ -43,7 +43,7 @@ class Card extends Component {
     render() {
         const { style } = this.props
         return (
-            <FlipView style={[{flex:1}, style]}
+            <FlipView style={style}
                 front={this.renderFront()}
                 back={this.renderBack()}
                 isFlipped={this.state.isFlipped}

@@ -1,20 +1,26 @@
 import React, { Component } from 'react'
-import { View, Text, Modal, TextInput, TouchableHighlight, TouchableOpacity } from 'react-native'
-import { connect } from 'react-redux'
-import { Entypo, FontAwesome, MaterialIcons } from '@expo/vector-icons'
+import { View, Text, Modal, TextInput, TouchableOpacity } from 'react-native'
+import { FontAwesome } from '@expo/vector-icons'
 import styles from './styles'
-import DeckListItemView from '../../components/DeckListItemView'
 import CardStack from '../../components/CardStack'
 
 class DeckDetails extends Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = { edit: false }
     }
 
     renderItem({ item }) {
-        return <DeckListItemView item={item} />
+        return (
+            <View style={styles.row}>
+                <CardStack distance={5} height={70}>
+                    <View style={{flex:1, flexDirection:'row', justifyContent:'center', alignItems: 'center'}}>
+                        <Text style={{flex:1, marginLeft: 20, fontWeight: 'bold', fontSize: 24, color: '#bbb'}}>{item.title}</Text>
+                    </View>
+                </CardStack>
+            </View>
+        )
     }
 
     keyExtractor(item, index) {
@@ -23,6 +29,7 @@ class DeckDetails extends Component {
 
     render() {
         const { edit } = this.state
+        const { deck } = this.props.screenProps
         return (
             <View style={[{backgroundColor:'#32cdff',flex: 1}, styles.screeen]}>
                 <Modal
@@ -53,24 +60,25 @@ class DeckDetails extends Component {
                     </View>
                 </Modal>
                 <CardStack height={200}>
+                    <View style={{flex:1, padding: 15, alignSelf: 'flex-start', flexDirection: 'column', justifyContent:'flex-start', alignItems: 'flex-start'}}>
+                        <View style={{flexDirection: 'column', alignItems: 'flex-start'}}>
+                            <Text style={{fontWeight: 'bold'}}>Name</Text>
+                            <Text>{deck.title}</Text>
+                        </View>
+                        {deck.description && (
+                            <View style={{flexDirection:'column', marginTop: 10, alignItems: 'flex-start'}}>
+                                <Text style={{fontWeight: 'bold'}}>Description</Text>
+                                <Text style={{flex:1, flexWrap: 'wrap'}}>{deck.description}</Text>
+                            </View>
+                        )}
+                    </View>
                     <TouchableOpacity 
                         activeOpacity={.6} 
                         onPress={() => console.log('edit deck')}
                         style={{position:'absolute', top:10, right:10}}>
                         <FontAwesome name="gear" size={32} style={{color:'#ccc'}}/>
                     </TouchableOpacity>
-                    <Text>carta top</Text>
                 </CardStack>
-                <TouchableHighlight 
-                    style={styles.addButton}
-                    underlayColor='#41567a' 
-                    onPress={()=>{this.setState(state => ({edit:true}))}}>
-                    <Entypo 
-                        name="plus" 
-                        size={40} 
-                        color={'#fff'}
-                        style={{marginTop:5}}/>
-                </TouchableHighlight>
             </View>
         )
     }

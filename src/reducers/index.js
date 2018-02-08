@@ -3,6 +3,7 @@ import * as ActionTypes from '../actions/actionTypes'
 const mockInitialState = [{
     id: '1',
     title: 'React',
+    description: 'Deck to study react for Udacity course, it is pretty hard, but can make throught it if you have enought dedication.',
     cards: [{
         question: 'What is React?',
         answer: 'A library for managing user interfaces'

@@ -8,10 +8,9 @@ import styles from './styles'
 
 class DeckList extends Component {
 
-    openDeckDetails(item) {
-        const { id, title } = item
+    openDeckDetails(deck) {
         const { navigation } = this.props
-        navigation.navigate('DeckView', { id, title })
+        navigation.navigate('DeckView', { deck })
     }
 
     renderItem({ item }) {
