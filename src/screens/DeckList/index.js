@@ -2,27 +2,28 @@ import React, { Component } from 'react'
 import { FlatList, Text, View, TouchableHighlight, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { Entypo } from '@expo/vector-icons'
-import styles from './styles'
-import DeckListItemView from '../../components/DeckListItemView'
 import CardStack from '../../components/CardStack'
 import Badge from '../../components/Badge'
+import styles from './styles'
 
 class DeckList extends Component {
 
-    openDeckDetails() {
-        this.props.navigation.navigate('DeckView', { deckId: 1 })
+    openDeckDetails(item) {
+        const { id, title } = item
+        const { navigation } = this.props
+        navigation.navigate('DeckView', { id, title })
     }
 
     renderItem({ item }) {
         return (
             <TouchableOpacity
                 activeOpacity={.8} 
-                onPress={this.openDeckDetails.bind(this)}>
+                onPress={this.openDeckDetails.bind(this, item)}>
                 <View style={styles.row}>
                     <CardStack distance={5} height={70}>
                         <View style={{flex:1, flexDirection:'row', justifyContent:'center', alignItems: 'center'}}>
-                            <Text style={{flex:1, marginLeft: 10, fontSize: 18, color: '#bbb'}}>{item.title}</Text>
-                            <Badge style={{marginLeft: 10, marginRight: 10}}>{item.cards.length}</Badge>
+                            <Text style={{flex:1, marginLeft: 20, fontWeight: 'bold', fontSize: 24, color: '#bbb'}}>{item.title}</Text>
+                            <Badge style={{marginLeft: 10, marginRight: 20}}>{item.cards.length}</Badge>
                         </View>
                     </CardStack>
                 </View>
@@ -31,7 +32,7 @@ class DeckList extends Component {
     }
 
     keyExtractor(item, index) {
-        return item.title;
+        return index
     }
 
     render() {

@@ -17,7 +17,7 @@ export const MainNavigator = StackNavigator({
     DeckView: {
         screen: DeckView,
         navigationOptions: ({ navigation }) => ({
-            title: `Deck ${navigation.state.params.name}`
+            title: `${navigation.state.params.title} Deck`
         })
     }
 }, {
@@ -40,13 +40,13 @@ export const DeckTabs = TabNavigator({
     DeckDetails: {
         screen: DeckDetails,
         navigationOptions: {
-            tabBarLabel: 'Detalhes'
+            tabBarLabel: 'Details'
         }
     },
     DeckCards: {
         screen: DeckCards,
         navigationOptions: {
-            tabBarLabel: 'Cartas'
+            tabBarLabel: 'Cards'
         }
     },
     DeckQuiz: {

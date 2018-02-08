@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import { FlatList, View, TouchableHighlight, Text } from 'react-native'
 import { connect } from 'react-redux'
-import { Entypo } from '@expo/vector-icons'
-import styles from './styles'
-import DeckListItemView from '../../components/DeckListItemView'
 import { DeckTabs } from '../../config/navigation'
+import styles from './styles'
 
 class DeckView extends Component {
 
