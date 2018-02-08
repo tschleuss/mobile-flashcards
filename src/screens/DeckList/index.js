@@ -5,6 +5,7 @@ import { Entypo } from '@expo/vector-icons'
 import styles from './styles'
 import DeckListItemView from '../../components/DeckListItemView'
 import CardStack from '../../components/CardStack'
+import Badge from '../../components/Badge'
 
 class DeckList extends Component {
 
@@ -14,12 +15,15 @@ class DeckList extends Component {
 
     renderItem({ item }) {
         return (
-            <TouchableOpacity 
+            <TouchableOpacity
                 activeOpacity={.8} 
                 onPress={this.openDeckDetails.bind(this)}>
                 <View style={styles.row}>
-                    <CardStack distance={5}>
-                        <Text style={{fontSize: 18, color: '#bbb'}}>{item.title} ({item.cards.length})</Text>
+                    <CardStack distance={5} height={70}>
+                        <View style={{flex:1, flexDirection:'row', justifyContent:'center', alignItems: 'center'}}>
+                            <Text style={{flex:1, marginLeft: 10, fontSize: 18, color: '#bbb'}}>{item.title}</Text>
+                            <Badge style={{marginLeft: 10, marginRight: 10}}>{item.cards.length}</Badge>
+                        </View>
                     </CardStack>
                 </View>
             </TouchableOpacity>

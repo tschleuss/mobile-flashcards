@@ -2,12 +2,13 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
     deck: {
-        position: 'relative',
-        flex: 1
+        flex: 1,
+        position: 'relative'
     },
     card: {
-        position: 'absolute',
+        flex: 1,
         left: 0,
-        right: 0
+        right: 0,
+        position: 'absolute'
     }
 })

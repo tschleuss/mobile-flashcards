@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
     card: {
+        flex: 1,
         minHeight: 50,
         backgroundColor: '#fff',
         borderRadius: 10,

@@ -11,21 +11,27 @@ class Card extends Component {
     }
 
     renderFront() {
-        const { flip, front } = this.props
+        const { flip, front, style, children } = this.props
         return (
             flip ?
-            <TouchableOpacity style={{flex:1}} activeOpacity={1} onPress={() => {this.flip()}}>
-                <View style={[{flex:1},styles.card, this.props.style]}>{front}</View>
+            <TouchableOpacity 
+                style={{flex:1}} 
+                activeOpacity={1} 
+                onPress={() => {this.flip()}}>
+                <View style={[styles.card]}>{front}</View>
             </TouchableOpacity> :
-            <View style={[{flex:1},styles.card, this.props.style]}>{this.props.children}</View>
+            <View style={[styles.card]}>{children}</View>
         )
     }
 
     renderBack() {
-        const { back } = this.props
+        const { back, style } = this.props
         return (
-            <TouchableOpacity style={{flex:1}} activeOpacity={1} onPress={() => {this.flip()}}>
-                <View style={[{flex:1},styles.card, this.props.style]}>{back}</View>
+            <TouchableOpacity 
+                style={{flex:1}} 
+                activeOpacity={1} 
+                onPress={() => {this.flip()}}>
+                <View style={[styles.card]}>{back}</View>
             </TouchableOpacity>
         )
     }
@@ -35,8 +41,9 @@ class Card extends Component {
     }
 
     render() {
+        const { style } = this.props
         return (
-            <FlipView style={[this.props.style]}
+            <FlipView style={[{flex:1}, style]}
                 front={this.renderFront()}
                 back={this.renderBack()}
                 isFlipped={this.state.isFlipped}
