@@ -12,7 +12,6 @@ import Card from '../../components/Card'
 import styles from './styles'
 
 class DeckCards extends Component {
-
     constructor() {
         super()
         this.state = { isActionButtonVisible: true }
@@ -23,22 +22,46 @@ class DeckCards extends Component {
 
     renderFront(item) {
         return (
-            <View style={{position:'absolute', left: 0, top: 0, right: 0, bottom: 0, alignItems: 'center', justifyContent: 'center', padding: 20}}>
-                <TouchableOpacity 
-                    activeOpacity={.6} 
+            <View
+                style={{
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 20
+                }}>
+                <TouchableOpacity
+                    activeOpacity={0.6}
                     onPress={() => {}}
-                    style={{position:'absolute', top:10, right:10}}>
-                    <FontAwesome name="gear" size={32} style={{color:'#ccc'}}/>
+                    style={{ position: 'absolute', top: 10, right: 10 }}>
+                    <FontAwesome name="gear" size={32} style={{ color: '#ccc' }} />
                 </TouchableOpacity>
-                <Text style={{fontSize: 18, color: '#bbb', textAlign: 'center'}}>{item.question}</Text>
+                <Text style={{ fontSize: 18, color: '#bbb', textAlign: 'center' }}>
+                    {item.question}
+                </Text>
             </View>
         )
     }
 
     renderBack(item) {
         return (
-            <View style={{position:'absolute', left: 0, top: 0, right: 0, bottom: 0, alignItems: 'center', justifyContent: 'center', padding: 20}}>
-                <Text style={{fontSize: 18, color: '#bbb', textAlign: 'center'}}>{item.answer}</Text>
+            <View
+                style={{
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 20
+                }}>
+                <Text style={{ fontSize: 18, color: '#bbb', textAlign: 'center' }}>
+                    {item.answer}
+                </Text>
             </View>
         )
     }
@@ -46,12 +69,12 @@ class DeckCards extends Component {
     renderItem({ item }) {
         return (
             <View style={styles.row}>
-                <Card 
+                <Card
                     flip={true}
-                    style={{height: 200}}
+                    style={{ height: 200 }}
                     front={this.renderFront(item)}
-                    back={this.renderBack(item)}>
-                </Card>
+                    back={this.renderBack(item)}
+                />
             </View>
         )
     }
@@ -70,18 +93,26 @@ class DeckCards extends Component {
     }
 
     _onScroll(event) {
-
         const CustomLayoutLinear = {
             duration: 100,
-            create: { type: LayoutAnimation.Types.linear, property: LayoutAnimation.Properties.opacity },
-            update: { type: LayoutAnimation.Types.linear, property: LayoutAnimation.Properties.opacity },
-            delete: { type: LayoutAnimation.Types.linear, property: LayoutAnimation.Properties.opacity }
+            create: {
+                type: LayoutAnimation.Types.linear,
+                property: LayoutAnimation.Properties.opacity
+            },
+            update: {
+                type: LayoutAnimation.Types.linear,
+                property: LayoutAnimation.Properties.opacity
+            },
+            delete: {
+                type: LayoutAnimation.Types.linear,
+                property: LayoutAnimation.Properties.opacity
+            }
         }
 
         const limit = this._listViewContentHeight - this._listViewHeight
         const offset = event.nativeEvent.contentOffset.y
-        const currentOffset = (offset > limit) ? limit : offset
-        const direction = (currentOffset > 0 && currentOffset >= this._listViewOffset) ? 'down' : 'up'
+        const currentOffset = offset > limit ? limit : offset
+        const direction = currentOffset > 0 && currentOffset >= this._listViewOffset ? 'down' : 'up'
         const isActionButtonVisible = direction === 'up'
 
         if (isActionButtonVisible !== this.state.isActionButtonVisible) {
@@ -95,27 +126,25 @@ class DeckCards extends Component {
     render() {
         const { deck } = this.props.screenProps
         return (
-            <View style={{flex:1, backgroundColor:'#32cdff'}}>
+            <View style={{ flex: 1, backgroundColor: '#32cdff' }}>
                 <FlatList
                     data={deck.cards}
                     keyExtractor={this.keyExtractor.bind(this)}
                     renderItem={this.renderItem.bind(this)}
-                    style={{paddingTop:20}}
+                    style={{ paddingTop: 20 }}
                     onScroll={this._onScroll.bind(this)}
                     onContentSizeChange={this._onContentSizeChange.bind(this)}
                     onLayout={this._onLayout.bind(this)}
                     scrollEventThrottle={1}
                 />
                 {this.state.isActionButtonVisible && (
-                    <TouchableHighlight 
+                    <TouchableHighlight
                         style={styles.addButton}
-                        underlayColor='#41567a' 
-                        onPress={()=>{this.setState(state => ({edit:true}))}}>
-                        <Entypo 
-                            name="plus" 
-                            size={40} 
-                            color={'#fff'}
-                            style={{marginTop:5}}/>
+                        underlayColor="#41567a"
+                        onPress={() => {
+                            this.setState(state => ({ edit: true }))
+                        }}>
+                        <Entypo name="plus" size={40} color={'#fff'} style={{ marginTop: 5 }} />
                     </TouchableHighlight>
                 )}
             </View>

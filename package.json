@@ -3,7 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "devDependencies": {
-        "eslint": "^4.17.0",
+        "babel-eslint": "7",
+        "eslint": "3.x",
         "eslint-plugin-import": "^2.8.0",
         "eslint-plugin-jsx-a11y": "^6.0.3",
         "eslint-plugin-react": "^7.6.1",
@@ -28,6 +29,7 @@
         "react": "16.2.0",
         "react-native": "0.52.0",
         "react-native-flip-view-next": "^1.0.0",
+        "react-native-progress": "^3.4.0",
         "react-navigation": "^1.0.0-beta.30",
         "react-redux": "^5.0.6",
         "redux": "^3.7.2"

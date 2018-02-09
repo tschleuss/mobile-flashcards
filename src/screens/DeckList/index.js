@@ -7,7 +7,6 @@ import Badge from '../../components/Badge'
 import styles from './styles'
 
 class DeckList extends Component {
-
     openDeckDetails(deck) {
         const { navigation } = this.props
         navigation.navigate('DeckView', { deck })
@@ -15,14 +14,29 @@ class DeckList extends Component {
 
     renderItem({ item }) {
         return (
-            <TouchableOpacity
-                activeOpacity={.8} 
-                onPress={this.openDeckDetails.bind(this, item)}>
+            <TouchableOpacity activeOpacity={0.8} onPress={this.openDeckDetails.bind(this, item)}>
                 <View style={styles.row}>
                     <CardStack distance={5} height={70}>
-                        <View style={{flex:1, flexDirection:'row', justifyContent:'center', alignItems: 'center'}}>
-                            <Text style={{flex:1, marginLeft: 20, fontWeight: 'bold', fontSize: 24, color: '#bbb'}}>{item.title}</Text>
-                            <Badge style={{marginLeft: 10, marginRight: 20}}>{item.cards.length}</Badge>
+                        <View
+                            style={{
+                                flex: 1,
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                            <Text
+                                style={{
+                                    flex: 1,
+                                    marginLeft: 20,
+                                    fontWeight: 'bold',
+                                    fontSize: 24,
+                                    color: '#bbb'
+                                }}>
+                                {item.title}
+                            </Text>
+                            <Badge style={{ marginLeft: 10, marginRight: 20 }}>
+                                {item.cards.length}
+                            </Badge>
                         </View>
                     </CardStack>
                 </View>
@@ -36,23 +50,21 @@ class DeckList extends Component {
 
     render() {
         return (
-            <View style={{backgroundColor:'#32cdff',flex: 1}}>
+            <View style={{ backgroundColor: '#32cdff', flex: 1 }}>
                 <FlatList
                     data={this.props.decks}
                     extraData={this.state}
                     keyExtractor={this.keyExtractor.bind(this)}
                     renderItem={this.renderItem.bind(this)}
-                    style={{paddingTop:20}}
+                    style={{ paddingTop: 20 }}
                 />
-                <TouchableHighlight 
+                <TouchableHighlight
                     style={styles.addButton}
-                    underlayColor='#41567a' 
-                    onPress={()=>{console.log('pressed')}}>
-                    <Entypo 
-                        name="plus" 
-                        size={40} 
-                        color={'#fff'}
-                        style={{marginTop:5}}/>
+                    underlayColor="#41567a"
+                    onPress={() => {
+                        console.log('pressed')
+                    }}>
+                    <Entypo name="plus" size={40} color={'#fff'} style={{ marginTop: 5 }} />
                 </TouchableHighlight>
             </View>
         )

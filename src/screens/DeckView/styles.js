@@ -12,7 +12,7 @@ export default StyleSheet.create({
         position: 'absolute',
         bottom: 20,
         right: 20,
-        shadowColor: "#000000",
+        shadowColor: '#000000',
         shadowOpacity: 0.8,
         shadowRadius: 2,
         shadowOffset: {

@@ -3,8 +3,14 @@ import { View, TouchableOpacity } from 'react-native'
 import Card from '../Card'
 import styles from './styles'
 
-export default function CardStack({ height = 50, distance = 8, count = 2, style, onPress, children }) {
-
+export default function CardStack({
+    height = 50,
+    distance = 8,
+    count = 2,
+    style,
+    onPress,
+    children
+}) {
     const cards = []
     const maxZindex = count + 1
     for (let i = 0; i < count; i++) {
@@ -14,10 +20,8 @@ export default function CardStack({ height = 50, distance = 8, count = 2, style,
     }
 
     return (
-        <View style={[styles.deck, {height}]}>
-            <Card style={[{zIndex:maxZindex, height}, styles.card, style]}>
-                {children}
-            </Card>
+        <View style={[styles.deck, { height }]}>
+            <Card style={[{ zIndex: maxZindex, height }, styles.card, style]}>{children}</Card>
             {cards.map(card => <Card key={card.key} style={card.style} />)}
         </View>
     )
