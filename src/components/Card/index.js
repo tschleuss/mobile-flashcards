@@ -11,9 +11,9 @@ class Card extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const { isFlipped } = this.state
-        if(isFlipped && !nextProps.isFlipped) {
-            this.setState(state => ({ isFlipped: false }))
+        const { isFlipped } = nextProps
+        if(this.state.isFlipped !== isFlipped) {
+            this.setState(state => ({ isFlipped }))
         }
     }
 
@@ -52,7 +52,7 @@ class Card extends Component {
     }
 
     render() {
-        const { style } = this.props
+        const { style, onFlipStart } = this.props
         return (
             <FlipView
                 style={style}
@@ -61,6 +61,7 @@ class Card extends Component {
                 isFlipped={this.state.isFlipped}
                 flipAxis="y"
                 flipEasing={Easing.out(Easing.ease)}
+                onFlipStart={onFlipStart}
                 flipDuration={500}
                 perspective={2000}
             />

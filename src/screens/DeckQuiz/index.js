@@ -16,7 +16,7 @@ class DeckQuiz extends Component {
 
     constructor() {
         super()
-        this.state = { started: false, isFlipped: false}
+        this.state = { started: false, isFlipped: false }
     }
 
     _startQuiz() {
@@ -35,10 +35,19 @@ class DeckQuiz extends Component {
         this.setState(state => ({ started, progress }))
     }
 
+    _showAnswer() {
+        this.setState(state => ({ isFlipped: true }))
+    }
+
     _nextCard() {
         this.setState(state => ({ isFlipped: false }), () => {
-            setTimeout(() => this._renderNextCard(), 150) // Wait for the flip animation end, =(
+            // Wait for the flip animation end. Didn't find a better approach
+            setTimeout(() => this._renderNextCard(), 150)
         })
+    }
+
+    _onFlipStart(fromIsFlipped) {
+        this.setState(state => ({ isFlipped: !fromIsFlipped }))
     }
 
     _renderNextCard() {
@@ -155,16 +164,39 @@ class DeckQuiz extends Component {
                                 </View>
                             </View>
                             <View style={{ flex: 1, flexDirection: 'column' }}>
+                            
                                 <Card
                                     flip={true}
                                     isFlipped={isFlipped}
                                     style={{ height: 200, margin: 50 }}
+                                    onFlipStart={this._onFlipStart.bind(this)}
                                     front={this.renderFront(card)}
                                     back={this.renderBack(card)}/>
-                                <Button
-                                    onPress={() => this._nextCard()}
-                                    title="Next card"
-                                    color="#841584"/>
+
+                                {!isFlipped && (
+                                    <Button
+                                        onPress={() => this._showAnswer()}
+                                        title="Show Answer"
+                                        color="#841584"/>
+                                )}
+                                
+                                {isFlipped && (
+                                    <View style={{ flex: 1, flexDirection: 'column' }}>
+                                        <TouchableOpacity
+                                            onPress={() => {this._nextCard()}}
+                                            activeOpacity={0.6}
+                                            style={[styles.btn, styles.correctBtn]}>
+                                            <Text style={styles.btnText}>Correct</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            onPress={() => {this._nextCard()}}
+                                            activeOpacity={0.6}
+                                            style={[styles.btn, styles.incorrectBtn]}>
+                                            <Text style={styles.btnText}>Incorrect</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                )}
+
                             </View>
                         </View>
                     </View>
