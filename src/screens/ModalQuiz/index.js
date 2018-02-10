@@ -5,7 +5,8 @@ import {
     Modal,
     Button,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    LayoutAnimation
 } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import ProgressBar from 'react-native-progress/Bar'
@@ -17,16 +18,22 @@ class ModalQuiz extends Component {
 
     constructor(props) {
         super(props)
-        const { cards } = props
-        this.state = {
+        this.state = this._getInitialState(props)
+    }
+
+    _getInitialState(props) {
+        const cards = props.cards.filter(c => c)
+        return {
             cards,
             card: this._getNextCard(cards),
             total: cards.length,
             answers: [], 
             isFlipped: false,
             showButtons: true,
-            displayScore: false
-         }
+            displayScore: false,
+            displayRetry: false,
+            progress: 0
+        }
     }
 
     componentWillMount() {
@@ -35,7 +42,7 @@ class ModalQuiz extends Component {
 
     _closeQuiz() {
         const { onClose } = this.props
-        onClose({'sucesso': 'não ;)'})
+        onClose()
     }
 
     _showAnswer() {
@@ -82,7 +89,6 @@ class ModalQuiz extends Component {
 
     _renderNextCard() {
         const { answers, total } = this.state
-        console.log(`answers: ${answers.length}, total: ${total}`)
         if(answers.length === total) {
             this._displayScores()
         } else {
@@ -98,12 +104,34 @@ class ModalQuiz extends Component {
             ...state,
             displayScore: true
         }))
-        // const { onClose } = this.props 
-        // onClose({'sucesso': 'não ;)'})
+    }
+
+    _displayRetryOptions() {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
+        this.setState(state => ({
+            ...state,
+            displayRetry: true
+        }))
     }
 
     _getNextCard(cards) {
         return cards.splice(Math.floor(Math.random() * cards.length), 1).pop()
+    }
+
+    _retryQuiz() {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
+        const cards = this.props.cards.filter(c => c)
+        this.setState(state => ({
+            cards,
+            card: this._getNextCard(cards),
+            total: cards.length,
+            answers: [], 
+            isFlipped: false,
+            showButtons: true,
+            displayScore: false,
+            displayRetry: false,
+            progress: 0
+        }))
     }
 
     renderFront(card = {}) {
@@ -139,7 +167,8 @@ class ModalQuiz extends Component {
             total,
             score, 
             showButtons,
-            displayScore 
+            displayScore,
+            displayRetry
         } = this.state
 
         return (
@@ -190,11 +219,11 @@ class ModalQuiz extends Component {
                                     alignItems: 'center',
                                     justifyContent: 'center'}}>
                                     {/* {this.finishLogo} */}
-                                    <Image style={{height: 200}} 
+                                    <Image style={{height: 170}} 
                                         resizeMode="contain"
                                         source={require('../../images/finish.png')} />
                                     <Text style={{
-                                        marginTop: 50,
+                                        marginTop: 30,
                                         fontSize: 20,
                                         color: '#ccc'}}>Quiz concluído!</Text>
                                     <Text style={{
@@ -210,9 +239,11 @@ class ModalQuiz extends Component {
                                             interval={15} 
                                             countBy={1} 
                                             timing="linear" 
+                                            onFinish={() => this._displayRetryOptions()}
                                             formatter={val => {
                                             return `${parseFloat(val).toFixed(0)}%`
-                                        }}/>
+                                            }}
+                                        />
                                     </Text>
                                 </View>
                             )}
@@ -241,6 +272,22 @@ class ModalQuiz extends Component {
                                         activeOpacity={0.6}
                                         style={[styles.btn, styles.correctBtn]}>
                                         <Text style={styles.btnText}>Correct</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            )}
+                            {displayScore && displayRetry && (
+                                <View style={{flex:1, flexDirection: 'row'}}>
+                                    <TouchableOpacity
+                                        onPress={() => {this._closeQuiz()}}
+                                        activeOpacity={0.6}
+                                        style={[styles.btn, styles.incorrectBtn]}>
+                                        <Text style={styles.btnText}>Finish</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => {this._retryQuiz()}}
+                                        activeOpacity={0.6}
+                                        style={[styles.btn, styles.correctBtn]}>
+                                        <Text style={styles.btnText}>Try again</Text>
                                     </TouchableOpacity>
                                 </View>
                             )}
