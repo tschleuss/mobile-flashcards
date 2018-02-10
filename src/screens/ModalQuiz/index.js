@@ -4,10 +4,12 @@ import {
     Text,
     Modal,
     Button,
+    Image,
     TouchableOpacity
 } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import ProgressBar from 'react-native-progress/Bar'
+import AnimateNumber from 'react-native-animate-number'
 import Card from '../../components/Card'
 import styles from './styles'
 
@@ -20,74 +22,126 @@ class ModalQuiz extends Component {
             cards,
             card: this._getNextCard(cards),
             total: cards.length,
-            answered: 0, 
-            isFlipped: false
+            answers: [], 
+            isFlipped: false,
+            showButtons: true,
+            displayScore: false
          }
     }
 
-    componentWillReceiveProps(nextProps) {
-        const { show } = nextProps
-        if(this.state.show !== show) {
-            this.setState(state => ({ show }))
-        }
+    componentWillMount() {
+        this.finishLogo = (<Image resizeMode="contain" source={require('../../images/finish.png')} />)
     }
 
     _closeQuiz() {
-        const { onClose } = this.props 
+        const { onClose } = this.props
         onClose({'sucesso': 'não ;)'})
-        this.setState(state => ({ show: false }))
     }
 
     _showAnswer() {
-        this.setState(state => ({ isFlipped: true }))
+        this.setState(state => ({ 
+            ...state,
+            showButtons: false, 
+            isFlipped: true 
+        }))
     }
 
-    _nextCard() {
-        this.setState(state => ({ isFlipped: false }), () => {
-            // Wait for the flip animation end. Didn't find a better approach
+    _answerQuestion(wasCorrect) {
+        this.setState(state => {
+            const answers = state.answers
+            answers.push(wasCorrect)
+            const totalCorrected = answers.filter(a => a).length
+            return { 
+                ...state, 
+                answers,
+                progress: ((100 * answers.length) / state.total) / 100,
+                score: ((100 * totalCorrected) / state.total),
+                showButtons: false,
+                isFlipped: false 
+            }
+        }, () => {
             setTimeout(() => this._renderNextCard(), 150)
         })
     }
 
     _onFlipStart(fromIsFlipped) {
-        this.setState(state => ({ isFlipped: !fromIsFlipped }))
+        this.setState(state => ({ 
+            ...state,
+            isFlipped: !fromIsFlipped,
+            showButtons: false
+         }))
+    }
+
+    _onFlipEnd(isFlipped) {
+        this.setState(state => ({ 
+            ...state,
+            isFlipped,
+            showButtons: true, 
+         }))
     }
 
     _renderNextCard() {
+        const { answers, total } = this.state
+        console.log(`answers: ${answers.length}, total: ${total}`)
+        if(answers.length === total) {
+            this._displayScores()
+        } else {
+            this.setState(state => ({
+                ...state,
+                card: this._getNextCard(state.cards)
+            }))
+        }
+    }
+
+    _displayScores() {
         this.setState(state => ({
-            nextCard: false,
-            answered: state.answered + 1,
-            card: this._getNextCard(state.cards),
-            progress: ((100 * (state.answered + 1)) / state.total) / 100
+            ...state,
+            displayScore: true
         }))
+        // const { onClose } = this.props 
+        // onClose({'sucesso': 'não ;)'})
     }
 
     _getNextCard(cards) {
         return cards.splice(Math.floor(Math.random() * cards.length), 1).pop()
     }
 
-    _checkFinishedQuiz() {
-
-    }
-
     renderFront(card = {}) {
+        const { total, answers } = this.state
         return (
             <View style={styles.questionContainer}>
                 <Text style={styles.questionText}>{card.question}</Text>
+                <Text style={styles.quizInfoText}>
+                    {answers.length}/{total}
+                </Text>
             </View>
         )
     }
 
     renderBack(card = {}) {
+        const { total, answers } = this.state
         return (
             <View style={styles.questionContainer}>
                 <Text style={styles.questionText}>{card.answer}</Text>
+                <Text style={styles.quizInfoText}>
+                    {answers.length}/{total}
+                </Text>
             </View>
         )
     }
 
     render() {
-        const { card, progress, isFlipped } = this.state
+        
+        const { 
+            card, 
+            progress, 
+            isFlipped, 
+            total,
+            score, 
+            showButtons,
+            displayScore 
+        } = this.state
+
         return (
             <Modal
                 transparent={true}
@@ -120,20 +174,53 @@ class ModalQuiz extends Component {
 
                         {/* Body */}
                         <View style={styles.bodyContainer}>
-                        
-                            <Card
-                                flip={true}
-                                isFlipped={isFlipped}
-                                style={{ height: 200, margin: 50 }}
-                                onFlipStart={this._onFlipStart.bind(this)}
-                                front={this.renderFront(card)}
-                                back={this.renderBack(card)}/>
-
+                            {!displayScore && (
+                                <Card
+                                    flip={!isFlipped}
+                                    isFlipped={isFlipped}
+                                    style={styles.card}
+                                    onFlipStart={this._onFlipStart.bind(this)}
+                                    onFlipEnd={this._onFlipEnd.bind(this)}
+                                    front={this.renderFront(card)}
+                                    back={this.renderBack(card)}/>
+                            )}
+                            {displayScore && (
+                                <View style={{
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'}}>
+                                    {/* {this.finishLogo} */}
+                                    <Image style={{height: 200}} 
+                                        resizeMode="contain"
+                                        source={require('../../images/finish.png')} />
+                                    <Text style={{
+                                        marginTop: 50,
+                                        fontSize: 20,
+                                        color: '#ccc'}}>Quiz concluído!</Text>
+                                    <Text style={{
+                                        fontSize: 20,
+                                        color: '#ccc'}}>Sua pontuação:</Text>
+                                    <Text style={{
+                                        fontSize: 45,
+                                        fontWeight: 'bold',
+                                        color: '#ffbb46'}}>
+                                        {/* {score}% */}
+                                        <AnimateNumber 
+                                            value={score} 
+                                            interval={15} 
+                                            countBy={1} 
+                                            timing="linear" 
+                                            formatter={val => {
+                                            return `${parseFloat(val).toFixed(0)}%`
+                                        }}/>
+                                    </Text>
+                                </View>
+                            )}
                         </View>
 
                         {/* Buttons */}
-                        <View style={{ flexDirection: 'row' }}>
-                            {!isFlipped && (
+                        <View style={{ height: 60, flexDirection: 'row' }}>
+                            {showButtons && !isFlipped && (
                                 <TouchableOpacity
                                     onPress={() => {this._showAnswer()}}
                                     activeOpacity={0.6}
@@ -141,16 +228,16 @@ class ModalQuiz extends Component {
                                     <Text style={styles.btnText}>Show Answer</Text>
                                 </TouchableOpacity>
                             )}
-                            {isFlipped && (
+                            {showButtons && isFlipped && (
                                 <View style={{flex:1, flexDirection: 'row'}}>
                                     <TouchableOpacity
-                                        onPress={() => {this._nextCard()}}
+                                        onPress={() => {this._answerQuestion(false)}}
                                         activeOpacity={0.6}
                                         style={[styles.btn, styles.incorrectBtn]}>
                                         <Text style={styles.btnText}>Incorrect</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity
-                                        onPress={() => {this._nextCard()}}
+                                        onPress={() => {this._answerQuestion(true)}}
                                         activeOpacity={0.6}
                                         style={[styles.btn, styles.correctBtn]}>
                                         <Text style={styles.btnText}>Correct</Text>

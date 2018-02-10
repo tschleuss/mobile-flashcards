@@ -5,20 +5,22 @@ import styles from './styles'
 
 class Card extends Component {
     
-    constructor() {
-        super()
-        this.state = { isFlipped: false }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const { isFlipped } = nextProps
-        if(this.state.isFlipped !== isFlipped) {
-            this.setState(state => ({ isFlipped }))
+    constructor(props) {
+        super(props)
+        this.state = { 
+            flip: props.flip || false,
+            isFlipped: props.isFlipped || false
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        const { flip, isFlipped } = nextProps
+        this.setState(state => ({ flip, isFlipped }))
+    }
+
     renderFront() {
-        const { flip, front, children, cardStyle = {} } = this.props
+        const { front, children, cardStyle = {} } = this.props
+        const { flip } = this.state
         return flip ? (
             <TouchableOpacity
                 style={{ flex: 1 }}
@@ -48,11 +50,17 @@ class Card extends Component {
     }
 
     flip() {
-        this.setState(state => ({ isFlipped: !state.isFlipped }))
+        const { flip } = this.state
+        if(flip === true) {
+            this.setState(state => ({ 
+                ...state, 
+                isFlipped: !state.isFlipped
+            }))
+        }
     }
 
     render() {
-        const { style, onFlipStart } = this.props
+        const { style, onFlipStart, onFlipEnd } = this.props
         return (
             <FlipView
                 style={style}
@@ -62,6 +70,7 @@ class Card extends Component {
                 flipAxis="y"
                 flipEasing={Easing.out(Easing.ease)}
                 onFlipStart={onFlipStart}
+                onFlipEnd={onFlipEnd}
                 flipDuration={500}
                 perspective={2000}
             />

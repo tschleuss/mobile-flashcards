@@ -21,7 +21,7 @@ export default StyleSheet.create({
     },
     questionText: { 
         fontSize: 18, 
-        color: '#bbb', 
+        color: '#354868', 
         textAlign: 'center' 
     },
     headerContainer: {
@@ -32,6 +32,20 @@ export default StyleSheet.create({
     },
     bodyContainer: {
         flexDirection: 'column'
+    },
+    card: {
+        height: 200, 
+        marginLeft: 50,
+        marginRight: 50
+    },
+    quizInfoText: {
+        position: 'absolute',
+        bottom: 7,
+        right: 7,
+        textAlign: 'center',
+        color: '#ccc',
+        fontSize: 15,
+        fontWeight: 'bold'
     },
     btn: {
         flex: 1,
@@ -60,5 +74,12 @@ export default StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: '#fff'
+    },
+    score: {
+        backgroundColor: 'yellow',
+        flexDirection: 'row',
+        height: 200, 
+        marginLeft: 50,
+        marginRight: 50
     }
 })

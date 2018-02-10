@@ -5261,6 +5261,12 @@ react-devtools-core@3.0.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-native-animate-number@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-animate-number/-/react-native-animate-number-0.1.2.tgz#d41c5a784e05f9d788dafbf7b158584c65e8cf47"
+  dependencies:
+    react-timer-mixin "^0.13.3"
+
 react-native-branch@2.0.0-beta.3:
   version "2.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.0.0-beta.3.tgz#2167af86bbc9f964bd45bd5f37684e5b54965e32"
@@ -5446,7 +5452,7 @@ react-test-renderer@16.2.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-timer-mixin@^0.13.2:
+react-timer-mixin@^0.13.2, react-timer-mixin@^0.13.3:
   version "0.13.3"
   resolved "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.3.tgz#0da8b9f807ec07dc3e854d082c737c65605b3d22"
 
