@@ -31,25 +31,5 @@ export default StyleSheet.create({
             height: 1,
             width: 0
         }
-    },
-    btn: {
-        marginLeft: 60,
-        marginRight: 60,
-        marginBottom: 7,
-        borderRadius: 7,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 40
-    },
-    correctBtn: {
-        backgroundColor: '#3db543'
-    },
-    incorrectBtn: {
-        backgroundColor: '#ee562e'
-    },
-    btnText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#fff'
     }
 })

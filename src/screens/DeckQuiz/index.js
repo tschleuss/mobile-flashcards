@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
-import { 
-    View, 
-    Text, 
-    Image, 
-    Modal, 
+import {
+    View,
+    Text,
+    Image,
+    Modal,
     Button,
     TouchableOpacity
- } from 'react-native'
+} from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import ProgressBar from 'react-native-progress/Bar'
 import Card from '../../components/Card'
+import ModalQuiz from '../ModalQuiz'
 import styles from './styles'
 
 class DeckQuiz extends Component {
@@ -17,6 +18,11 @@ class DeckQuiz extends Component {
     constructor() {
         super()
         this.state = { started: false, isFlipped: false }
+    }
+
+    _onCloseModal(result) {
+        console.log(result)
+        this.setState(state => ({ started: false }))
     }
 
     _startQuiz() {
@@ -53,7 +59,7 @@ class DeckQuiz extends Component {
     _renderNextCard() {
         this.setState(state => ({
             nextCard: false,
-            count: state.count+1,
+            count: state.count + 1,
             card: this._getNextCard(state.cards),
             progress: ((100 * (state.count + 1)) / state.total) / 100
         }))
@@ -114,93 +120,16 @@ class DeckQuiz extends Component {
             <View
                 style={{
                     backgroundColor: '#32cdff',
-                    flex: 1,
                     position: 'relative',
                     padding: 20,
-                    overflow: 'hidden'
+                    flex: 1
                 }}>
-                <Modal
-                    transparent={true}
-                    hardwareAccelerated={true}
-                    animationType={'slide'}
-                    visible={started}>
-                    <View
-                        style={{
-                            flex: 1,
-                            position: 'relative',
-                            borderTopLeftRadius: 10,
-                            borderTopRightRadius: 10,
-                            marginTop: 20,
-                            backgroundColor: '#fff'
-                        }}>
-                        <View style={{ flexDirection: 'column' }}>
-                            <View
-                                style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    padding: 10
-                                }}>
-                                <TouchableOpacity
-                                    style={{ marginTop: 2 }}
-                                    onPress={() => this._closeQuiz()}>
-                                    <Entypo
-                                        name="cross"
-                                        size={32}
-                                        style={{ color: '#32cdff', fontWeight: 'bold' }}
-                                    />
-                                </TouchableOpacity>
-                                <View style={{ flex: 1, marginLeft: 10, marginRight: 10 }}>
-                                    <ProgressBar
-                                        progress={progress}
-                                        width={null}
-                                        height={8}
-                                        borderWidth={0}
-                                        color={'#ffbb46'}
-                                        animationConfig={{ bounciness: 15 }}
-                                        unfilledColor={'#e8e8e8'}
-                                        useNativeDriver={true}
-                                    />
-                                </View>
-                            </View>
-                            <View style={{ flex: 1, flexDirection: 'column' }}>
-                            
-                                <Card
-                                    flip={true}
-                                    isFlipped={isFlipped}
-                                    style={{ height: 200, margin: 50 }}
-                                    onFlipStart={this._onFlipStart.bind(this)}
-                                    front={this.renderFront(card)}
-                                    back={this.renderBack(card)}/>
-
-                                {!isFlipped && (
-                                    <Button
-                                        onPress={() => this._showAnswer()}
-                                        title="Show Answer"
-                                        color="#841584"/>
-                                )}
-                                
-                                {isFlipped && (
-                                    <View style={{ flex: 1, flexDirection: 'column' }}>
-                                        <TouchableOpacity
-                                            onPress={() => {this._nextCard()}}
-                                            activeOpacity={0.6}
-                                            style={[styles.btn, styles.correctBtn]}>
-                                            <Text style={styles.btnText}>Correct</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            onPress={() => {this._nextCard()}}
-                                            activeOpacity={0.6}
-                                            style={[styles.btn, styles.incorrectBtn]}>
-                                            <Text style={styles.btnText}>Incorrect</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                )}
-
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
+                {started && (
+                    <ModalQuiz 
+                        onClose={this._onCloseModal.bind(this)}
+                        cards={cards}
+                    />
+                )}
                 <View style={{ flex: 1 }}>
                     <Text
                         style={{
