@@ -1,10 +1,5 @@
 import React, { Component } from 'react'
-import {
-    View,
-    Text,
-    Modal,
-    TouchableOpacity
-} from 'react-native'
+import { View, Text, Modal, Alert, TouchableOpacity } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import ModalInput from '../../components/ModalInput'
 import Card from '../../components/Card'
@@ -15,8 +10,12 @@ class ModalCard extends Component {
     constructor(props) {
         super(props)
         this.initConstants()
-        const { title = '', question = null, answer = null } = props
-        this.state = {
+        this.state = this.getInitialState()
+    }
+
+    getInitialState(props) {
+        const { title = '', question, answer } = props
+        return {
             editing: false,
             type: '',
             editTitle: '',
@@ -79,8 +78,14 @@ class ModalCard extends Component {
 
     finishEdit() {
         const { onFinish = () => {} } = this.props
-        const { question, answer } = this.state
-        onFinish(question, answer)
+        const { question = '', answer = '' } = this.state
+        if (question.length && answer.length) {
+            onFinish(question, answer)
+        } else {
+            const msg = 'You should inform a question and answer.'
+            const btns = [{ text: 'OK' }]
+            Alert.alert('Validation', msg, btns)
+        }
     }
 
     render() {

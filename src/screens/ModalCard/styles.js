@@ -22,9 +22,7 @@ export default StyleSheet.create({
         color: '#354868'
     },
     btn: {
-        // position: 'absolute',
-        // right: 10,
-        // top: 10
+        marginRight: 5
     },
     btnText: {
         color: '#32cdff',

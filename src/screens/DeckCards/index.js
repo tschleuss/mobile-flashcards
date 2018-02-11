@@ -3,13 +3,13 @@ import {
     Alert,
     FlatList,
     View,
+    Text,
     TouchableOpacity,
     TouchableHighlight,
-    Text,
     LayoutAnimation
 } from 'react-native'
 import { connect } from 'react-redux'
-import { removeCard, saveCard } from '../../actions/actionCreators'
+import { addCard, removeCard, saveCard } from '../../actions/actionCreators'
 import { Entypo, FontAwesome } from '@expo/vector-icons'
 import Card from '../../components/Card'
 import ModalCard from '../ModalCard'
@@ -19,7 +19,11 @@ class DeckCards extends Component {
 
     constructor() {
         super()
-        this.state = { isActionButtonVisible: true, editing: false }
+        this.state = {
+            isActionButtonVisible: true,
+            editing: false,
+            creating: false
+        }
         this._listViewOffset = 0
         this._listViewHeight = 0
         this._listViewContentHeight = 0
@@ -32,68 +36,65 @@ class DeckCards extends Component {
         return true
     }
 
+    createNewCard() {
+        this.setState({ creating: true })
+    }
+
+    onCancelCreating() {
+        this.setState({ creating: false })
+    }
+
+    onFinishCreating(question, answer) {
+        const { deck } = this.props
+        this.props.addCard(deck.id, { question, answer })
+        this.setState({ creating: false })
+    }
+
+    editCard(item) {
+        this.setState({ editing: true, card: item })
+    }
+
+    onFinishEditing(question, answer) {
+        const { deck } = this.props
+        this.props.saveCard(deck.id, { question, answer })
+        this.setState({ editing: false })
+    }
+
+    onCancelEditing() {
+        this.setState({ editing: false })
+    }
+
     askDeleteCard(card) {
         const { deck } = this.props.screenProps
-        Alert.alert(
-            'Exclusion confirmation',
-            `Do you really want to exclude this card?`, [
-                { text: 'Cancel', style: 'cancel' },
-                { text: 'OK', onPress: () => this.deleteCard(deck.id, card.id) }
-            ], { cancelable: false }
-        )
+        const msg = 'Do you really want to exclude this card?'
+        const btns = [
+            { text: 'Cancel', style: 'cancel' },
+            { text: 'OK', onPress: () => this.deleteCard(deck.id, card.id) }
+        ]
+        Alert.alert('Exclusion confirmation', msg, btns)
     }
 
     deleteCard(deckId, cardId) {
         this.props.removeCard(deckId, cardId)
     }
 
-    editCard(item) {
-        this.setState(state => ({
-            ...state,
-            editing: true,
-            card: item
-        }))
-    }
-
-    onFinishEditing(question, answer) {
-        const { deck } = this.props
-        const { card } = this.state
-        this.props.saveCard(deck.id, { ...card, question, answer })
-        this.setState(state => ({ ...state, editing: false }))
-    }
-
-    onCancelEditing() {
-        this.setState(state => ({ ...state, editing: false }))
-    }
-
     renderFront(item) {
         return (
             <View
-                style={{
-                    position: 'absolute',
-                    left: 0,
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: 20
-                }}>
+                style={styles.cardContainer}>
                 <TouchableOpacity
                     activeOpacity={0.6}
                     onPress={() => this.editCard(item)}
-                    style={{ position: 'absolute', top: 10, right: 10 }}>
-                    <FontAwesome name="gear" size={32} style={{ color: '#ccc' }} />
+                    style={[styles.btn, styles.btnEdit]}>
+                    <FontAwesome name="gear" size={32} style={styles.iconEdit} />
                 </TouchableOpacity>
                 <TouchableOpacity
                     activeOpacity={0.6}
                     onPress={() => this.askDeleteCard(item)}
-                    style={{ position: 'absolute', bottom: 10, right: 10 }}>
-                    <FontAwesome name="trash" size={32} style={{ color: '#ff5635' }} />
+                    style={[styles.btn, styles.btnRemove]}>
+                    <FontAwesome name="trash" size={32} style={styles.iconRemove} />
                 </TouchableOpacity>
-                <Text style={{ fontSize: 18, color: '#bbb', textAlign: 'center' }}>
-                    {item.question}
-                </Text>
+                <Text style={styles.cardText}>{item.question}</Text>
             </View>
         )
     }
@@ -101,19 +102,8 @@ class DeckCards extends Component {
     renderBack(item) {
         return (
             <View
-                style={{
-                    position: 'absolute',
-                    left: 0,
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: 20
-                }}>
-                <Text style={{ fontSize: 18, color: '#bbb', textAlign: 'center' }}>
-                    {item.answer}
-                </Text>
+                style={styles.cardContainer}>
+                <Text style={styles.cardText}>{item.answer}</Text>
             </View>
         )
     }
@@ -123,7 +113,7 @@ class DeckCards extends Component {
             <View style={styles.row}>
                 <Card
                     flip={true}
-                    style={{ height: 200 }}
+                    style={styles.card}
                     front={this.renderFront(item)}
                     back={this.renderBack(item)}
                 />
@@ -145,6 +135,7 @@ class DeckCards extends Component {
     }
 
     _onScroll(event) {
+
         const CustomLayoutLinear = {
             duration: 100,
             create: {
@@ -177,7 +168,7 @@ class DeckCards extends Component {
 
     render() {
         const { deck } = this.props
-        const { card, editing } = this.state
+        const { card, editing, creating } = this.state
         return (
             <View style={{ flex: 1, backgroundColor: '#32cdff' }}>
                 {editing && (
@@ -187,6 +178,13 @@ class DeckCards extends Component {
                         answer={card.answer}
                         onCancel={() => this.onCancelEditing()} 
                         onFinish={(question, answer) => this.onFinishEditing(question, answer)}
+                    />
+                )}
+                {creating && (
+                    <ModalCard 
+                        title={'Create Card'}
+                        onCancel={() => this.onCancelCreating()} 
+                        onFinish={(question, answer) => this.onFinishCreating(question, answer)}
                     />
                 )}
                 <FlatList
@@ -204,10 +202,8 @@ class DeckCards extends Component {
                     <TouchableHighlight
                         style={styles.addButton}
                         underlayColor="#41567a"
-                        onPress={() => {
-                            this.setState(state => ({ edit: true }))
-                        }}>
-                        <Entypo name="plus" size={40} color={'#fff'} style={{ marginTop: 5 }} />
+                        onPress={() => this.createNewCard()}>
+                        <Entypo name="plus" size={40} color={'#fff'} style={styles.addButtonIcon} />
                     </TouchableHighlight>
                 )}
             </View>
@@ -220,6 +216,7 @@ const mapStateToProps = (decks, props) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+    addCard: (deckId, question, answer) => dispatch(addCard(deckId, question, answer)),
     removeCard: (deckId, cardId) => dispatch(removeCard(deckId, cardId)),
     saveCard: (deckId, card) => dispatch(saveCard(deckId, card))
 })

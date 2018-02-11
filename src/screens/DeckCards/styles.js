@@ -20,9 +20,46 @@ export default StyleSheet.create({
             width: 0
         }
     },
+    addButtonIcon: {
+        marginTop: 5
+    },
     row: {
         paddingBottom: 35,
         paddingLeft: 15,
         paddingRight: 15
+    },
+    cardContainer: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 20
+    },
+    btn: {
+        position: 'absolute',
+        right: 10
+    },
+    btnRemove: {
+        bottom: 10,
+    },
+    iconRemove: {
+        color: '#ff5635'
+    },
+    btnEdit: {
+        top: 10
+    },
+    iconEdit: {
+        color: '#ccc'
+    },
+    card: {
+        height: 200
+    },
+    cardText: {
+        fontSize: 18,
+        color: '#bbb',
+        textAlign: 'center'
     }
 })

@@ -1,15 +1,5 @@
 import React, { Component } from 'react'
-import {
-    View,
-    Text,
-    Image,
-    Modal,
-    Button,
-    TouchableOpacity
-} from 'react-native'
-import { Entypo } from '@expo/vector-icons'
-import ProgressBar from 'react-native-progress/Bar'
-import Card from '../../components/Card'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import ModalQuiz from '../ModalQuiz'
 import styles from './styles'
 
@@ -21,75 +11,38 @@ class DeckQuiz extends Component {
     }
 
     componentWillMount() {
-        this.image = (<Image resizeMode="contain" style={styles.logo} source={require('../../images/splash_logo.png')} />)
+        this.image = (<Image resizeMode="contain" style={styles.logo} source={require('../../images/quiz.png')} />)
     }
 
-    _onCloseModal(result) {
+    onCloseModal(result) {
         this.setState(state => ({ started: false }))
     }
 
-    _startQuiz() {
+    startQuiz() {
         const { cards } = this.props.screenProps.deck
-        this.setState(state => ({
-            cards: cards.filter(c => c),
-            started: true
-        }))
+        this.setState({ cards: cards.filter(c => c), started: true })
     }
 
     render() {
         const { cards, started } = this.state
         return (
-            <View
-                style={{
-                    backgroundColor: '#32cdff',
-                    position: 'relative',
-                    padding: 20,
-                    flex: 1
-                }}>
+            <View style={styles.screenContainer}>
                 {started && (
                     <ModalQuiz 
-                        onClose={this._onCloseModal.bind(this)}
-                        cards={cards}
-                    />
+                        onClose={this.onCloseModal.bind(this)}
+                        cards={cards}/>
                 )}
-                <View style={{ flex: 1 }}>
-                    <Text
-                        style={{
-                            fontSize: 24,
-                            color: '#354868',
-                            textAlign: 'center',
-                            fontWeight: 'bold'
-                        }}>
-                        Fazer um teste!
+                <View style={styles.quizContainer}>
+                    <Text style={styles.quizTitle}>Take a Quiz!</Text>
+                    <Text style={styles.quizText}>
+                        Ready for a challenge? Test your knowledge of this deck.
                     </Text>
-                    <Text
-                        style={{
-                            fontSize: 18,
-                            color: '#354868',
-                            textAlign: 'center',
-                            marginTop: 20
-                        }}>
-                        Pronto para um desafio? Teste seu conhecimento sobre o assunto abordado
-                        neste baralho!
-                    </Text>
-                    <View style={styles.container}>
-                        {this.image}
-                    </View>
+                    <View style={styles.imageContainer}>{this.image}</View>
                     <TouchableOpacity
                         activeOpacity={0.6}
-                        onPress={() => {
-                            this._startQuiz()
-                        }}
+                        onPress={() => this.startQuiz()}
                         style={styles.startButton}>
-                        <Text
-                            style={{
-                                fontSize: 18,
-                                color: '#fff',
-                                textAlign: 'center',
-                                fontWeight: 'bold'
-                            }}>
-                            Iniciar o Quiz!
-                        </Text>
+                        <Text style={styles.buttonText}>Start Quiz!</Text>
                     </TouchableOpacity>
                 </View>
             </View>

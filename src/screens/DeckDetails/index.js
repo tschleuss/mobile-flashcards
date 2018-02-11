@@ -29,23 +29,23 @@ class DeckDetails extends Component {
         }))
     }
 
+    onCancelEditing() {
+        this.setState({ editing: false })
+    }
+
     onFinishEditing(title) {
         const { deck } = this.props
         this.props.saveDeck({ ...deck, title })
-        this.setState(state => ({
-            ...state,
-            editing: false
-        }))
+        this.setState({ editing: false })
     }
 
     askDeleteDeck(deck) {
-        Alert.alert(
-            'Exclusion confirmation',
-            `Do you really want to exclude the deck '${deck.title}'?`, [
-                { text: 'Cancel', style: 'cancel' },
-                { text: 'OK', onPress: () => this.deleteDeck(deck.id) }
-            ], { cancelable: false }
-        )
+        const msg = `Do you really want to exclude the deck '${deck.title}'?`
+        const btns = [
+            { text: 'Cancel', style: 'cancel' },
+            { text: 'OK', onPress: () => this.deleteDeck(deck.id) }
+        ]
+        Alert.alert('Exclusion confirmation', msg, btns)
     }
 
     deleteDeck(id) {
@@ -96,6 +96,7 @@ class DeckDetails extends Component {
                         placeholder={'Enter the name ...'}
                         value={deck.title}
                         maxLength={30}
+                        onCancel={() => this.onCancelEditing()}
                         onFinish={value => this.onFinishEditing(value)}/>
                 )}
                 <CardStack height={200}>

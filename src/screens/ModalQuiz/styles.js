@@ -9,6 +9,15 @@ export default StyleSheet.create({
         borderTopRightRadius: 10,
         marginTop: 20
     },
+    quizContainer: { 
+        flex:1 , 
+        flexDirection: 'column', 
+        justifyContent: 'space-between' 
+    },
+    closeIcon: { 
+        color: '#32cdff', 
+        fontWeight: 'bold' 
+    },
     questionContainer: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -47,6 +56,14 @@ export default StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold'
     },
+    buttonContainer: { 
+        height: 60, 
+        flexDirection: 'row' 
+    },
+    buttonGroupWrapper: {
+        flex:1, 
+        flexDirection: 'row'
+    },
     btn: {
         flex: 1,
         marginBottom: 10,
@@ -75,11 +92,23 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         color: '#fff'
     },
-    score: {
-        backgroundColor: 'yellow',
-        flexDirection: 'row',
-        height: 200, 
-        marginLeft: 50,
-        marginRight: 50
+    scoreContainer: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    scoreTextTitle: {
+        marginTop: 30,
+        fontSize: 20,
+        color: '#ccc'
+    },
+    scoreText: {
+        fontSize: 20,
+        color: '#ccc'
+    },
+    scoreValue: {
+        fontSize: 45,
+        fontWeight: 'bold',
+        color: '#ffbb46'
     }
 })
