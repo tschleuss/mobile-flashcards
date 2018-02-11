@@ -28,6 +28,10 @@ class DeckList extends Component {
         navigation.push('DeckView', { deck })
     }
 
+    onCancelCreating() {
+        this.setState({ creating: false })
+    }
+
     onFinishCreating(name) {
         this.props.addDeck(name)
         this.setState(state => ({
@@ -75,6 +79,7 @@ class DeckList extends Component {
                         title={'Deck\'s name'}
                         placeholder={'Enter the name ...'}
                         maxLength={30}
+                        onCancel={() => this.onCancelCreating()}
                         onFinish={name => this.onFinishCreating(name)}/>
                 )}
                 <FlatList

@@ -1,2 +1,2 @@
-import App from './src'
-export default App
+import Bootstrap from './src/screens/Bootstrap'
+export default Bootstrap

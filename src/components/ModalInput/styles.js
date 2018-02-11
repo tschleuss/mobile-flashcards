@@ -9,27 +9,34 @@ export default StyleSheet.create({
         backgroundColor: '#fff',
         flex: 1
     },
+    headerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10
+    },
     modalTitle: {
-        marginTop: 12,
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 18,
         color: '#354868'
     },
-    btn: { 
-        position: 'absolute', 
-        right: 10, 
-        top: 10
+    btn: {
+        marginRight: 5
     },
-    btnText: { 
-        color: '#32cdff', 
-        fontWeight: 'bold', 
-        fontSize: 18 
+    cancelBtn: {
+        color: '#32cdff',
+        fontWeight: 'bold'
     },
-    textInput: { 
-        flex: 1, 
-        padding: 10, 
-        textAlignVertical: 'top', 
+    btnText: {
+        color: '#32cdff',
+        fontWeight: 'bold',
+        fontSize: 18
+    },
+    textInput: {
+        flex: 1,
+        padding: 10,
+        textAlignVertical: 'top',
         fontSize: 20,
         marginTop: 15
     }

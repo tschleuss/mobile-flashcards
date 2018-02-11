@@ -56,6 +56,10 @@ class ModalCard extends Component {
         }))
     }
 
+    onCancelEditing() {
+        this.setState({ editing: false })
+    }
+
     onFinishEditing(type, value) {
         this.setState(state => {
             const nState = { ...state, editing: false }
@@ -99,8 +103,8 @@ class ModalCard extends Component {
                         placeholder={editPlaceholder}
                         maxLength={30}
                         value={editValue}
-                        onFinish={value => 
-                            this.onFinishEditing(type, value)}
+                        onCancel={() => this.onCancelEditing() }
+                        onFinish={value => this.onFinishEditing(type, value)}
                     />
                 )}
                 <View style={styles.modalContainer}>

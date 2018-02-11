@@ -1,12 +1,5 @@
 import React, { Component } from 'react'
-import {
-    Alert,
-    View,
-    Text,
-    Modal,
-    TextInput,
-    TouchableOpacity
-} from 'react-native'
+import { View, Text, TouchableOpacity, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { removeDeck, saveDeck } from '../../actions/actionCreators'
 import { FontAwesome } from '@expo/vector-icons'
