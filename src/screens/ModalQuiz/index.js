@@ -121,17 +121,7 @@ class ModalQuiz extends Component {
     _retryQuiz() {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
         const cards = this.props.cards.filter(c => c)
-        this.setState(state => ({
-            cards,
-            card: this._getNextCard(cards),
-            total: cards.length,
-            answers: [], 
-            isFlipped: false,
-            showButtons: true,
-            displayScore: false,
-            displayRetry: false,
-            progress: 0
-        }))
+        this.setState(state => this._getInitialState(props))
     }
 
     renderFront(card = {}) {

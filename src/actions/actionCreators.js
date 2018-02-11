@@ -3,7 +3,7 @@ import * as ActionTypes from './actionTypes'
 /** Decks */
 
 export const getDecks = () => ({ type: ActionTypes.GET_DECKS })
-export const addDeck = deck => ({ type: ActionTypes.ADD_DECK, deck })
+export const addDeck = name => ({ type: ActionTypes.ADD_DECK, name })
 
 /** Cards */
 
