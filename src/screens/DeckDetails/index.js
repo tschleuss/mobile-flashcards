@@ -10,7 +10,6 @@ import {
 import { connect } from 'react-redux'
 import { removeDeck } from '../../actions/actionCreators'
 import { FontAwesome } from '@expo/vector-icons'
-import { NavigationActions } from 'react-navigation'
 import CardStack from '../../components/CardStack'
 import NavigationHelper from '../../helper/NavigationHelper'
 import styles from './styles'
@@ -34,7 +33,7 @@ class DeckDetails extends Component {
     }
 
     deleteDeck(id) {
-        console.log('deleteDeck')
+        this.props.removeDeck(id)
         const navigation = NavigationHelper.getInstance().getRootNavigaton() // BAD
         navigation.pop()
     }
@@ -166,12 +165,7 @@ class DeckDetails extends Component {
 const mapStateToProps = decks => ({ decks })
 
 const mapDispatchToProps = (dispatch, props) => ({
-    removeDeck: id => dispatch(removeDeck(id)),
-    goBack: () => {
-        //console.log(props.screenProps)
-        //dispatch(NavigationActions.reset({ index: 0 }))
-        //navigation.goBack(null)
-    }
+    removeDeck: id => dispatch(removeDeck(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckDetails)

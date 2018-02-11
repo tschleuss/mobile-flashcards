@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {
+    Alert,
     FlatList,
     View,
     TouchableOpacity,
@@ -7,17 +8,35 @@ import {
     Text,
     LayoutAnimation
 } from 'react-native'
+import { connect } from 'react-redux'
+import { removeCard } from '../../actions/actionCreators'
 import { Entypo, FontAwesome } from '@expo/vector-icons'
 import Card from '../../components/Card'
 import styles from './styles'
 
 class DeckCards extends Component {
+
     constructor() {
         super()
         this.state = { isActionButtonVisible: true }
         this._listViewOffset = 0
         this._listViewHeight = 0
         this._listViewContentHeight = 0
+    }
+
+    askDeleteCard(card) {
+        const { deck } = this.props.screenProps
+        Alert.alert(
+            'Exclusion confirmation',
+            `Do you really want to exclude this card?`, [
+                { text: 'Cancel', style: 'cancel' },
+                { text: 'OK', onPress: () => this.deleteCard(deck.id, card.id) }
+            ], { cancelable: false }
+        )
+    }
+
+    deleteCard(deckId, cardId) {
+        this.props.removeCard(deckId, cardId)
     }
 
     renderFront(item) {
@@ -41,7 +60,7 @@ class DeckCards extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     activeOpacity={0.6}
-                    onPress={() => {}}
+                    onPress={() => this.askDeleteCard(item)}
                     style={{ position: 'absolute', bottom: 10, right: 10 }}>
                     <FontAwesome name="trash" size={32} style={{ color: '#ff5635' }} />
                 </TouchableOpacity>
@@ -130,11 +149,12 @@ class DeckCards extends Component {
     }
 
     render() {
-        const { deck } = this.props.screenProps
+        const { deck } = this.props
         return (
             <View style={{ flex: 1, backgroundColor: '#32cdff' }}>
                 <FlatList
                     data={deck.cards}
+                    extraData={this.props}
                     keyExtractor={this.keyExtractor.bind(this)}
                     renderItem={this.renderItem.bind(this)}
                     style={{ paddingTop: 20 }}
@@ -158,4 +178,12 @@ class DeckCards extends Component {
     }
 }
 
-export default DeckCards
+const mapStateToProps = (decks, props) => ({
+    deck: decks.find(d => d.id === props.screenProps.deck.id)
+})
+
+const mapDispatchToProps = dispatch => ({
+    removeCard: (deckId, cardId) => dispatch(removeCard(deckId, cardId))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckCards)

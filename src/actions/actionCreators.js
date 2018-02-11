@@ -10,4 +10,4 @@ export const removeDeck = id => ({ type: ActionTypes.REMOVE_DECK, id })
 
 export const getCards = () => ({ type: ActionTypes.GET_CARDS })
 export const addCard = card => ({ type: ActionTypes.ADD_CARD, card })
-export const removeCard = id => ({ type: ActionTypes.REMOVE_CARD, id })
+export const removeCard = (deckId, cardId) => ({ type: ActionTypes.REMOVE_CARD, deckId, cardId })
