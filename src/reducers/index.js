@@ -61,6 +61,13 @@ function decks(state = mockInitialState, action) {
             }]
         case ActionTypes.REMOVE_DECK:
             return state.filter(d => d.id !== action.id)
+        case ActionTypes.SAVE_DECK:
+            return state.map(deck => {
+                if (deck.id === action.deck.id) {
+                    return action.deck
+                }
+                return deck
+            })
         case ActionTypes.GET_CARDS:
             return {
                 ...state

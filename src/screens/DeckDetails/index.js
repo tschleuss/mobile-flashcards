@@ -8,8 +8,9 @@ import {
     TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
-import { removeDeck } from '../../actions/actionCreators'
+import { removeDeck, saveDeck } from '../../actions/actionCreators'
 import { FontAwesome } from '@expo/vector-icons'
+import ModalInput from '../../components/ModalInput'
 import CardStack from '../../components/CardStack'
 import NavigationHelper from '../../helper/NavigationHelper'
 import styles from './styles'
@@ -18,8 +19,30 @@ class DeckDetails extends Component {
 
     constructor(props) {
         super(props)
-        const { deck } = props.screenProps
-        this.state = { edit: false, deck }
+        this.state = { editing: false }
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        if (typeof nextProps.deck === 'undefined') {
+            return false
+        }
+        return super.shouldComponentUpdate(nextProps, nextState, nextContext)
+    }
+
+    editDeck() {
+        this.setState(state => ({
+            ...state,
+            editing: true
+        }))
+    }
+
+    onFinishEditing(title) {
+        const { deck } = this.props
+        this.props.saveDeck({ ...deck, title })
+        this.setState(state => ({
+            ...state,
+            editing: false
+        }))
     }
 
     askDeleteDeck(deck) {
@@ -70,50 +93,18 @@ class DeckDetails extends Component {
     }
 
     render() {
-        const { deck, edit } = this.state
+        const { editing } = this.state
+        const { deck } = this.props
         return (
             <View style={[{ backgroundColor: '#32cdff', flex: 1 }, styles.screeen]}>
-                <Modal
-                    transparent={true}
-                    hardwareAccelerated={true}
-                    animationType={'slide'}
-                    visible={edit}>
-                    <View
-                        style={{
-                            position: 'relative',
-                            borderTopLeftRadius: 10,
-                            borderTopRightRadius: 10,
-                            marginTop: 20,
-                            backgroundColor: '#fff',
-                            flex: 1
-                        }}>
-                        <Text
-                            style={{
-                                marginTop: 12,
-                                textAlign: 'center',
-                                fontWeight: 'bold',
-                                fontSize: 18,
-                                color: '#354868'
-                            }}>
-                            Editar título
-                        </Text>
-                        <TouchableOpacity
-                            style={{ position: 'absolute', right: 10, top: 10 }}
-                            onPress={() => {
-                                this.setState(state => ({ edit: false }))
-                            }}>
-                            <Text style={{ color: '#32cdff', fontWeight: 'bold', fontSize: 18 }}>
-                                Done
-                            </Text>
-                        </TouchableOpacity>
-                        <TextInput
-                            placeholder={'Informe o título...'}
-                            multiline={true}
-                            autoFocus={true}
-                            style={{ flex: 1, padding: 10, textAlignVertical: 'top', fontSize: 20 }}
-                        />
-                    </View>
-                </Modal>
+                {editing && (
+                    <ModalInput 
+                        title={'Deck\'s name'}
+                        placeholder={'Enter the name ...'}
+                        value={deck.title}
+                        maxLength={30}
+                        onFinish={value => this.onFinishEditing(value)}/>
+                )}
                 <CardStack height={200}>
                     <View
                         style={{
@@ -144,9 +135,7 @@ class DeckDetails extends Component {
                     </View>
                     <TouchableOpacity
                         activeOpacity={0.6}
-                        onPress={() => {
-                            this.setState(state => ({ edit: true }))
-                        }}
+                        onPress={() => this.editDeck()}
                         style={{ position: 'absolute', top: 10, right: 10 }}>
                         <FontAwesome name="gear" size={32} style={{ color: '#ccc' }} />
                     </TouchableOpacity>
@@ -162,10 +151,13 @@ class DeckDetails extends Component {
     }
 }
 
-const mapStateToProps = decks => ({ decks })
+const mapStateToProps = (decks, props) => ({
+    deck: decks.find(d => d.id === props.screenProps.deck.id)
+})
 
 const mapDispatchToProps = (dispatch, props) => ({
-    removeDeck: id => dispatch(removeDeck(id))
+    removeDeck: id => dispatch(removeDeck(id)),
+    saveDeck: deck => dispatch(saveDeck(deck))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckDetails)

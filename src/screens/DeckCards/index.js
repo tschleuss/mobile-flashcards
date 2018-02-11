@@ -24,6 +24,13 @@ class DeckCards extends Component {
         this._listViewContentHeight = 0
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        if (typeof nextProps.deck === 'undefined') {
+            return false
+        }
+        return super.shouldComponentUpdate(nextProps, nextState, nextContext)
+    }
+
     askDeleteCard(card) {
         const { deck } = this.props.screenProps
         Alert.alert(

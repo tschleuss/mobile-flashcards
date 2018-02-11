@@ -7,7 +7,8 @@ class ModalInput extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { value: '' }
+        const { value = '' } = props
+        this.state = { value }
     }
 
     render() {
@@ -31,6 +32,7 @@ class ModalInput extends Component {
                         multiline={true}
                         autoFocus={true}
                         maxLength={maxLength}
+                        value={value}
                         onChangeText={value => this.setState({ value })}
                         style={styles.textInput}
                     />
@@ -41,4 +43,3 @@ class ModalInput extends Component {
 }
 
 export default ModalInput
-

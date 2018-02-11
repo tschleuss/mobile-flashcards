@@ -25,15 +25,14 @@ class DeckQuiz extends Component {
     }
 
     _onCloseModal(result) {
-        console.log(result)
         this.setState(state => ({ started: false }))
     }
 
     _startQuiz() {
         const { cards } = this.props.screenProps.deck
-        this.setState(state => ({ 
+        this.setState(state => ({
             cards: cards.filter(c => c),
-            started: true 
+            started: true
         }))
     }
 

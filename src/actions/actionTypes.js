@@ -2,6 +2,7 @@
 export const GET_DECKS = 'GET_DECKS'
 export const ADD_DECK = 'ADD_DECK'
 export const REMOVE_DECK = 'REMOVE_DECK'
+export const SAVE_DECK = 'SAVE_DECK'
 
 /** Cards */
 

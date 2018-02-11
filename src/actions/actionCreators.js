@@ -5,6 +5,7 @@ import * as ActionTypes from './actionTypes'
 export const getDecks = () => ({ type: ActionTypes.GET_DECKS })
 export const addDeck = name => ({ type: ActionTypes.ADD_DECK, name })
 export const removeDeck = id => ({ type: ActionTypes.REMOVE_DECK, id })
+export const saveDeck = deck => ({ type: ActionTypes.SAVE_DECK, deck })
 
 /** Cards */
 
