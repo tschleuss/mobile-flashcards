@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
-import { 
-    FlatList, 
-    Text, 
-    View, 
-    TouchableHighlight, 
-    TouchableOpacity 
+import {
+    FlatList,
+    Text,
+    View,
+    TouchableHighlight,
+    TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
 import { Entypo } from '@expo/vector-icons'
 import { addDeck } from '../../actions/actionCreators'
+import NavigationHelper from '../../helper/NavigationHelper'
 import CardStack from '../../components/CardStack'
 import Badge from '../../components/Badge'
 import ModalInput from '../../components/ModalInput'
@@ -23,7 +24,8 @@ class DeckList extends Component {
 
     openDeckDetails(deck) {
         const { navigation } = this.props
-        navigation.navigate('DeckView', { deck })
+        NavigationHelper.getInstance().setRootNavigaton(navigation) // BAD!!!
+        navigation.push('DeckView', { deck })
     }
 
     onFinishCreating(name) {

@@ -1,13 +1,42 @@
 import React, { Component } from 'react'
-import { View, Text, Modal, TextInput, TouchableOpacity } from 'react-native'
+import {
+    Alert,
+    View,
+    Text,
+    Modal,
+    TextInput,
+    TouchableOpacity
+} from 'react-native'
+import { connect } from 'react-redux'
+import { removeDeck } from '../../actions/actionCreators'
 import { FontAwesome } from '@expo/vector-icons'
+import { NavigationActions } from 'react-navigation'
 import CardStack from '../../components/CardStack'
+import NavigationHelper from '../../helper/NavigationHelper'
 import styles from './styles'
 
 class DeckDetails extends Component {
+
     constructor(props) {
         super(props)
-        this.state = { edit: false }
+        const { deck } = props.screenProps
+        this.state = { edit: false, deck }
+    }
+
+    askDeleteDeck(deck) {
+        Alert.alert(
+            'Exclusion confirmation',
+            `Do you really want to exclude the deck '${deck.title}'?`, [
+                { text: 'Cancel', style: 'cancel' },
+                { text: 'OK', onPress: () => this.deleteDeck(deck.id) }
+            ], { cancelable: false }
+        )
+    }
+
+    deleteDeck(id) {
+        console.log('deleteDeck')
+        const navigation = NavigationHelper.getInstance().getRootNavigaton() // BAD
+        navigation.pop()
     }
 
     renderItem({ item }) {
@@ -42,8 +71,7 @@ class DeckDetails extends Component {
     }
 
     render() {
-        const { edit } = this.state
-        const { deck } = this.props.screenProps
+        const { deck, edit } = this.state
         return (
             <View style={[{ backgroundColor: '#32cdff', flex: 1 }, styles.screeen]}>
                 <Modal
@@ -123,10 +151,27 @@ class DeckDetails extends Component {
                         style={{ position: 'absolute', top: 10, right: 10 }}>
                         <FontAwesome name="gear" size={32} style={{ color: '#ccc' }} />
                     </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={() => this.askDeleteDeck(deck)}
+                        style={{ position: 'absolute', bottom: 10, right: 10 }}>
+                        <FontAwesome name="trash" size={32} style={{ color: '#ff5635' }} />
+                    </TouchableOpacity>
                 </CardStack>
             </View>
         )
     }
 }
 
-export default DeckDetails
+const mapStateToProps = decks => ({ decks })
+
+const mapDispatchToProps = (dispatch, props) => ({
+    removeDeck: id => dispatch(removeDeck(id)),
+    goBack: () => {
+        //console.log(props.screenProps)
+        //dispatch(NavigationActions.reset({ index: 0 }))
+        //navigation.goBack(null)
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckDetails)

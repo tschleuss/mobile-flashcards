@@ -39,6 +39,12 @@ class DeckCards extends Component {
                     style={{ position: 'absolute', top: 10, right: 10 }}>
                     <FontAwesome name="gear" size={32} style={{ color: '#ccc' }} />
                 </TouchableOpacity>
+                <TouchableOpacity
+                    activeOpacity={0.6}
+                    onPress={() => {}}
+                    style={{ position: 'absolute', bottom: 10, right: 10 }}>
+                    <FontAwesome name="trash" size={32} style={{ color: '#ff5635' }} />
+                </TouchableOpacity>
                 <Text style={{ fontSize: 18, color: '#bbb', textAlign: 'center' }}>
                     {item.question}
                 </Text>
