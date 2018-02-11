@@ -9,16 +9,17 @@ import {
     LayoutAnimation
 } from 'react-native'
 import { connect } from 'react-redux'
-import { removeCard } from '../../actions/actionCreators'
+import { removeCard, saveCard } from '../../actions/actionCreators'
 import { Entypo, FontAwesome } from '@expo/vector-icons'
 import Card from '../../components/Card'
+import ModalCard from '../ModalCard'
 import styles from './styles'
 
 class DeckCards extends Component {
 
     constructor() {
         super()
-        this.state = { isActionButtonVisible: true }
+        this.state = { isActionButtonVisible: true, editing: false }
         this._listViewOffset = 0
         this._listViewHeight = 0
         this._listViewContentHeight = 0
@@ -28,7 +29,7 @@ class DeckCards extends Component {
         if (typeof nextProps.deck === 'undefined') {
             return false
         }
-        return super.shouldComponentUpdate(nextProps, nextState, nextContext)
+        return true
     }
 
     askDeleteCard(card) {
@@ -46,6 +47,25 @@ class DeckCards extends Component {
         this.props.removeCard(deckId, cardId)
     }
 
+    editCard(item) {
+        this.setState(state => ({
+            ...state,
+            editing: true,
+            card: item
+        }))
+    }
+
+    onFinishEditing(question, answer) {
+        const { deck } = this.props
+        const { card } = this.state
+        this.props.saveCard(deck.id, { ...card, question, answer })
+        this.setState(state => ({ ...state, editing: false }))
+    }
+
+    onCancelEditing() {
+        this.setState(state => ({ ...state, editing: false }))
+    }
+
     renderFront(item) {
         return (
             <View
@@ -61,7 +81,7 @@ class DeckCards extends Component {
                 }}>
                 <TouchableOpacity
                     activeOpacity={0.6}
-                    onPress={() => {}}
+                    onPress={() => this.editCard(item)}
                     style={{ position: 'absolute', top: 10, right: 10 }}>
                     <FontAwesome name="gear" size={32} style={{ color: '#ccc' }} />
                 </TouchableOpacity>
@@ -157,8 +177,18 @@ class DeckCards extends Component {
 
     render() {
         const { deck } = this.props
+        const { card, editing } = this.state
         return (
             <View style={{ flex: 1, backgroundColor: '#32cdff' }}>
+                {editing && (
+                    <ModalCard 
+                        title={'Edit Card'}
+                        question={card.question}
+                        answer={card.answer}
+                        onCancel={() => this.onCancelEditing()} 
+                        onFinish={(question, answer) => this.onFinishEditing(question, answer)}
+                    />
+                )}
                 <FlatList
                     data={deck.cards}
                     extraData={this.props}
@@ -190,7 +220,8 @@ const mapStateToProps = (decks, props) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    removeCard: (deckId, cardId) => dispatch(removeCard(deckId, cardId))
+    removeCard: (deckId, cardId) => dispatch(removeCard(deckId, cardId)),
+    saveCard: (deckId, card) => dispatch(saveCard(deckId, card))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckCards)

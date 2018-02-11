@@ -30,6 +30,7 @@ export default StyleSheet.create({
         flex: 1, 
         padding: 10, 
         textAlignVertical: 'top', 
-        fontSize: 20 
+        fontSize: 20,
+        marginTop: 15
     }
 })

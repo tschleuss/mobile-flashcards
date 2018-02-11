@@ -26,7 +26,7 @@ class DeckDetails extends Component {
         if (typeof nextProps.deck === 'undefined') {
             return false
         }
-        return super.shouldComponentUpdate(nextProps, nextState, nextContext)
+        return true
     }
 
     editDeck() {

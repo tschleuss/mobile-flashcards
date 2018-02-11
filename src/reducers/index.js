@@ -84,6 +84,19 @@ function decks(state = mockInitialState, action) {
                 }
                 return nDeck
             })
+        case ActionTypes.SAVE_CARD:
+            return state.map(deck => {
+                if (deck.id === action.deckId) {
+                    deck.cards = deck.cards.map(card => {
+                        if (card.id === action.card.id) {
+                            return action.card
+                        }
+                        return card
+                    })
+
+                }
+                return deck
+            })
         default:
             return state
     }
