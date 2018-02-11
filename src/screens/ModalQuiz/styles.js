@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-    modalContainer: { 
+    modalContainer: {
         flex: 1,
         position: 'relative',
         backgroundColor: '#fff',
@@ -9,14 +9,14 @@ export default StyleSheet.create({
         borderTopRightRadius: 10,
         marginTop: 20
     },
-    quizContainer: { 
-        flex:1 , 
-        flexDirection: 'column', 
-        justifyContent: 'space-between' 
+    quizContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-between'
     },
-    closeIcon: { 
-        color: '#32cdff', 
-        fontWeight: 'bold' 
+    closeIcon: {
+        color: '#32cdff',
+        fontWeight: 'bold'
     },
     questionContainer: {
         alignItems: 'center',
@@ -28,10 +28,10 @@ export default StyleSheet.create({
         bottom: 0,
         padding: 20
     },
-    questionText: { 
-        fontSize: 18, 
-        color: '#354868', 
-        textAlign: 'center' 
+    questionText: {
+        fontSize: 18,
+        color: '#354868',
+        textAlign: 'center'
     },
     headerContainer: {
         flexDirection: 'row',
@@ -43,7 +43,7 @@ export default StyleSheet.create({
         flexDirection: 'column'
     },
     card: {
-        height: 200, 
+        height: 200,
         marginLeft: 50,
         marginRight: 50
     },
@@ -56,12 +56,12 @@ export default StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold'
     },
-    buttonContainer: { 
-        height: 60, 
-        flexDirection: 'row' 
+    buttonContainer: {
+        height: 60,
+        flexDirection: 'row'
     },
     buttonGroupWrapper: {
-        flex:1, 
+        flex: 1,
         flexDirection: 'row'
     },
     btn: {
@@ -105,6 +105,9 @@ export default StyleSheet.create({
     scoreText: {
         fontSize: 20,
         color: '#ccc'
+    },
+    scoreLogo: {
+        height: 170
     },
     scoreValue: {
         fontSize: 45,

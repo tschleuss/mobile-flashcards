@@ -10,7 +10,7 @@ class ModalCard extends Component {
     constructor(props) {
         super(props)
         this.initConstants()
-        this.state = this.getInitialState()
+        this.state = this.getInitialState(props)
     }
 
     getInitialState(props) {

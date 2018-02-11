@@ -15,10 +15,12 @@ class ModalQuiz extends Component {
 
     getInitialState(props) {
         const cards = props.cards.filter(c => c)
+        const total = cards.length
+        const card = this.getNextCard(cards)
         return {
             cards,
-            card: this.getNextCard(cards),
-            total: cards.length,
+            total,
+            card,
             answers: [],
             isFlipped: false,
             showButtons: true,
@@ -29,7 +31,7 @@ class ModalQuiz extends Component {
     }
 
     componentWillMount() {
-        this.finishLogo = (<Image style={{height: 170}} resizeMode="contain" source={require('../../images/finish.png')} />)
+        this.finishLogo = (<Image style={styles.scoreLogo} resizeMode="contain" source={require('../../images/finish.png')} />)
     }
 
     closeQuiz() {
@@ -38,11 +40,7 @@ class ModalQuiz extends Component {
     }
 
     showAnswer() {
-        this.setState(state => ({
-            ...state,
-            showButtons: false,
-            isFlipped: true
-        }))
+        this.setState({ showButtons: false, isFlipped: true })
     }
 
     answerQuestion(wasCorrect) {
@@ -79,18 +77,12 @@ class ModalQuiz extends Component {
     }
 
     displayScores() {
-        this.setState(state => ({
-            ...state,
-            displayScore: true
-        }))
+        this.setState({ displayScore: true })
     }
 
     displayRetryOptions() {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
-        this.setState(state => ({
-            ...state,
-            displayRetry: true
-        }))
+        this.setState({ displayRetry: true })
     }
 
     getNextCard(cards) {
