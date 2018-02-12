@@ -1,7 +1,14 @@
 {
     "name": "mobile-flashcards",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "private": true,
+    "author": {
+        "name": "Thyago Schleuss",
+        "email": "tschleuss@gmail.com",
+        "url": "https://github.com/tschleuss"
+    },
+    "description": "This is the Mobile Flashcards project for the final assessment project for Udacity's React Native course.",
+    "license": "MIT",
     "devDependencies": {
         "babel-eslint": "7",
         "eslint": "3.x",
