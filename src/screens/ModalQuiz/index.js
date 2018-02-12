@@ -172,8 +172,8 @@ class ModalQuiz extends Component {
                             {displayScore && (
                                 <View style={styles.scoreContainer}>
                                     {this.finishLogo}
-                                    <Text style={styles.scoreTextTitle}>Quiz concluído!</Text>
-                                    <Text style={styles.scoreText}>Sua pontuação:</Text>
+                                    <Text style={styles.scoreTextTitle}>Quiz finished!</Text>
+                                    <Text style={styles.scoreText}>Your score:</Text>
                                     <Text style={styles.scoreValue}>
                                         <AnimateNumber 
                                             value={score} 
