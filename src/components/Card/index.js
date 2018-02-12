@@ -3,8 +3,14 @@ import { View, Easing, TouchableOpacity } from 'react-native'
 import FlipView from 'react-native-flip-view-next'
 import styles from './styles'
 
+/**
+ * Display a stylized empty white card with rounder corners.
+ */
 class Card extends Component {
     
+    /**
+     * Default constructor.
+     */
     constructor(props) {
         super(props)
         this.state = { 
@@ -13,21 +19,27 @@ class Card extends Component {
         }
     }
 
+    /**
+     * Listen to some properties change to know if 
+     * we need to update our component.
+     */
     componentWillReceiveProps(nextProps) {
         const { flip, isFlipped } = nextProps
         this.setState(state => ({ flip, isFlipped }))
     }
 
+    /**
+     * This function render what will be displayed in the front part of the card.
+     * When flip is active, the component will listen to tap action to flip the card. 
+     */
     renderFront() {
         const { front, children, cardStyle = {} } = this.props
         const { flip } = this.state
         return flip ? (
             <TouchableOpacity
-                style={{ flex: 1 }}
+                style={styles.flex}
                 activeOpacity={1}
-                onPress={() => {
-                    this.flip()
-                }}>
+                onPress={() => this.flip()}>
                 <View style={[styles.card, cardStyle]}>{front}</View>
             </TouchableOpacity>
         ) : (
@@ -35,38 +47,44 @@ class Card extends Component {
         )
     }
 
+    /**
+     * When flip is active, this function render what will be displayed
+     * in the back part of the card.
+     */
     renderBack() {
         const { back, cardStyle = {} } = this.props
         return (
             <TouchableOpacity
-                style={{ flex: 1 }}
+                style={styles.flex}
                 activeOpacity={1}
-                onPress={() => {
-                    this.flip()
-                }}>
+                onPress={() => this.flip()}>
                 <View style={[styles.card, cardStyle]}>{back}</View>
             </TouchableOpacity>
         )
     }
 
+    /**
+     * Flip our card to show what was rendered in the oposite side.
+     */
     flip() {
         const { flip } = this.state
         if(flip === true) {
-            this.setState(state => ({ 
-                ...state, 
-                isFlipped: !state.isFlipped
-            }))
+            this.setState(state => ({ isFlipped: !state.isFlipped }))
         }
     }
 
+    /**
+     * Render our component in the screen.
+     */
     render() {
         const { style, onFlipStart, onFlipEnd } = this.props
+        const { isFlipped } = this.state
         return (
             <FlipView
                 style={style}
                 front={this.renderFront()}
                 back={this.renderBack()}
-                isFlipped={this.state.isFlipped}
+                isFlipped={isFlipped}
                 flipAxis="y"
                 flipEasing={Easing.out(Easing.ease)}
                 onFlipStart={onFlipStart}

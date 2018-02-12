@@ -5,14 +5,23 @@ import ModalInput from '../../components/ModalInput'
 import Card from '../../components/Card'
 import styles from './styles'
 
+/**
+ * Modal used to create and/or edit cards.
+ */
 class ModalCard extends Component {
 
+    /**
+     * Default constrcutor.
+     */
     constructor(props) {
         super(props)
         this.initConstants()
         this.state = this.getInitialState(props)
     }
 
+    /**
+     * Define the initial state of this component.
+     */
     getInitialState(props) {
         const { title = '', question, answer } = props
         return {
@@ -26,6 +35,9 @@ class ModalCard extends Component {
         }
     }
 
+    /** 
+     * Define some constants to use on this component.
+     */
     initConstants() {
         this.TYPE_QUESTION = 'question'
         this.TYPE_ANSWER = 'answer'
@@ -33,6 +45,10 @@ class ModalCard extends Component {
         this.DEFAULT_ANSWER = 'Type your back answer...'
     }
 
+    /**
+     * Define some specific attributes on our state
+     * base on the type of the card beign created or edited.
+     */
     getStateForEditType(type) {
         if (type === this.TYPE_QUESTION) {
             return {
@@ -46,6 +62,10 @@ class ModalCard extends Component {
         }
     }
 
+    /**
+     * Listener called when user tap to edit a card text.
+     * It can be a question or answer card.
+     */
     editCard(type) {
         this.setState({
             ...this.getStateForEditType(type),
@@ -54,10 +74,16 @@ class ModalCard extends Component {
         })
     }
 
+    /**
+     * Listener called when user cancel the editing of a card.
+     */
     onCancelEditing() {
         this.setState({ editing: false })
     }
 
+    /**
+     * Listener called when user finish the edit of a card.
+     */
     onFinishEditing(type, value) {
         this.setState(state => {
             const nState = { editing: false }
@@ -70,11 +96,19 @@ class ModalCard extends Component {
         })
     }
 
+    /** 
+     * Listener called when user cancel 
+     * the creation or edit of a card.
+     */
     cancelEdit() {
         const { onCancel = () => {} } = this.props
         onCancel()
     }
 
+    /** 
+     * Listener called when user concludes 
+     * the creation or edit of a card.
+     */
     finishEdit() {
         const { onFinish = () => {} } = this.props
         const { question = '', answer = '' } = this.state
@@ -87,6 +121,9 @@ class ModalCard extends Component {
         }
     }
 
+    /**
+     * Render our component in the screen.
+     */
     render() {
 
         const { editing, editTitle, editPlaceholder } = this.state

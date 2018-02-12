@@ -1,10 +1,13 @@
 import * as ActionTypes from '../actions/actionTypes'
 import initialState from './state'
 
+/**
+ * Define our reducer logic.
+ */
 function decks(state = initialState, action) {
 
     switch (action.type) {
-
+        
         case ActionTypes.ADD_DECK:
             return [...state, {
                 id: Date.now(),

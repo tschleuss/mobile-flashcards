@@ -15,8 +15,15 @@ import Card from '../../components/Card'
 import ModalCard from '../ModalCard'
 import styles from './styles'
 
+/**
+ * Display a list of cards inside a deck, 
+ * with option to add or edit cards.
+ */
 class DeckCards extends Component {
 
+    /**
+     * Default constructor.
+     */
     constructor() {
         super()
         this.state = {
@@ -29,6 +36,10 @@ class DeckCards extends Component {
         this.listViewContentHeight = 0
     }
 
+    /**
+     * Define when that screen should be updated.
+     * When it don't have a defined deck yet, prevent react from rendered it.
+     */
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         if (typeof nextProps.deck === 'undefined') {
             return false
@@ -36,34 +47,56 @@ class DeckCards extends Component {
         return true
     }
 
+    /**
+     * Display a modal to create a new card.
+     */
     createNewCard() {
         this.setState({ creating: true })
     }
 
+    /**
+     * Listener called when user cancel the creation of a card.
+     */
     onCancelCreating() {
         this.setState({ creating: false })
     }
 
+    /**
+     * Listener called when user finish the creation of a card.
+     */
     onFinishCreating(question, answer) {
         const { deck } = this.props
         this.props.addCard(deck.id, { question, answer })
         this.setState({ creating: false })
     }
 
+    /**
+     * Display a modal to edit a existent card.
+     */
     editCard(item) {
         this.setState({ editing: true, card: item })
     }
 
+    /**
+     * Listener called when user finish the edit of a card.
+     */
     onFinishEditing(question, answer) {
         const { deck } = this.props
         this.props.saveCard(deck.id, { question, answer })
         this.setState({ editing: false })
     }
 
+    /**
+     * Listener called when user cancel the editing of a card.
+     */
     onCancelEditing() {
         this.setState({ editing: false })
     }
 
+    /**
+     * Display a alert to confirm that if user really wants
+     * to remove a specific card on current deck.
+     */
     askDeleteCard(card) {
         const { deck } = this.props
         const msg = 'Do you really want to exclude this card?'
@@ -74,10 +107,16 @@ class DeckCards extends Component {
         Alert.alert('Exclusion confirmation', msg, btns)
     }
 
+    /**
+     * Delete a specific card on current deck.
+     */
     deleteCard(deckId, cardId) {
         this.props.removeCard(deckId, cardId)
     }
 
+    /**
+     * This function render what will be displayed in the front part of the card.
+     */
     renderFront(item) {
         return (
             <View
@@ -99,6 +138,9 @@ class DeckCards extends Component {
         )
     }
 
+    /**
+     * This function render what will be displayed in the back part of the card.
+     */
     renderBack(item) {
         return (
             <View style={styles.cardContainer}>
@@ -107,7 +149,10 @@ class DeckCards extends Component {
         )
     }
 
-    renderItem({ item }) {
+    /**
+     * This function render what will be displayed in each row of the list.
+     */
+    renderRow({ item }) {
         return (
             <View style={styles.row}>
                 <Card
@@ -119,19 +164,31 @@ class DeckCards extends Component {
         )
     }
 
+    /**
+     * Define a key for each row of the list.
+     */
     keyExtractor(item, index) {
         return index
     }
 
+    /**
+     * Some list listeners to use alongside 'onScroll'.
+     */
     onLayout(event) {
         const { height } = event.nativeEvent.layout
         this.listViewHeight = height
     }
 
+    /**
+     * Some list listeners to use alongside 'onScroll'.
+     */
     onContentSizeChange(contentWidth, contentHeight) {
         this.listViewContentHeight = contentHeight
     }
 
+    /**
+     * Listener to know when user scroll the list, so we can hide or action button.
+     */
     onScroll(event) {
 
         const CustomLayoutLinear = {
@@ -164,6 +221,9 @@ class DeckCards extends Component {
         this.listViewOffset = currentOffset
     }
 
+    /**
+     * Render our component in the screen.
+     */
     render() {
         const { cards } = this.props.deck
         const { card, editing, creating } = this.state
@@ -191,7 +251,7 @@ class DeckCards extends Component {
                         data={cards}
                         extraData={this.props}
                         keyExtractor={this.keyExtractor.bind(this)}
-                        renderItem={this.renderItem.bind(this)}
+                        renderItem={this.renderRow.bind(this)}
                         style={{ paddingTop: 20 }}
                         onScroll={this.onScroll.bind(this)}
                         onContentSizeChange={this.onContentSizeChange.bind(this)}

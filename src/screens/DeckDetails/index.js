@@ -8,39 +8,58 @@ import CardStack from '../../components/CardStack'
 import NavigationHelper from '../../helper/navigationHelper'
 import styles from './styles'
 
+/**
+ * Display details of the current deck.
+ * Users are allowed to delete and edit deck's title.
+ */
 class DeckDetails extends Component {
 
+    /**
+     * Default constructor.
+     */
     constructor(props) {
         super(props)
         this.state = { editing: false }
     }
 
-    componentWillReceiveProps(newProps) {
-        console.log(`componentWillReceiveProps: ${newProps.deck.cards.length}`)
-    }
-
+    /**
+     * Define when that screen should be updated.
+     * When it don't have a defined deck yet, prevent react from rendered it.
+     */
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        console.log(`shouldComponentUpdate: ${nextProps.deck.cards.length}`)
         if (typeof nextProps.deck === 'undefined') {
             return false
         }
         return true
     }
 
+    /**
+     * Display a modal to edit the current deck.
+     */
     editDeck() {
         this.setState({ editing: true })
     }
 
+    /**
+     * Listener called when user cancel the editing of the deck.
+     */
     onCancelEditing() {
         this.setState({ editing: false })
     }
 
+    /**
+     * Listener called when user finish the edit of the deck.
+     */
     onFinishEditing(title) {
         const { deck } = this.props
         this.props.saveDeck({ ...deck, title })
         this.setState({ editing: false })
     }
 
+    /**
+     * Display a alert to confirm that if user 
+     * really wants to delete current deck.
+     */
     askDeleteDeck(deck) {
         const msg = `Do you really want to exclude the deck '${deck.title}'?`
         const btns = [
@@ -50,16 +69,25 @@ class DeckDetails extends Component {
         Alert.alert('Exclusion confirmation', msg, btns)
     }
 
+    /**
+     * Delete the current deck.
+     */
     deleteDeck(id) {
         this.props.removeDeck(id)
         const navigation = NavigationHelper.getInstance().getRootNavigaton() // BAD
         navigation.pop()
     }
 
+    /**
+     * Define a key for each row of the list.
+     */
     keyExtractor(item, index) {
         return item.title
     }
 
+    /**
+     * Render our component in the screen.
+     */
     render() {
         const { editing } = this.state
         const { deck } = this.props

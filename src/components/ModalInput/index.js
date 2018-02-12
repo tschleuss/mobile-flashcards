@@ -3,19 +3,34 @@ import { View, Text, Modal, TextInput, Alert, TouchableOpacity } from 'react-nat
 import { Entypo } from '@expo/vector-icons'
 import styles from './styles'
 
+/**
+ * Display a modal like screen with one input text field.
+ * It has a much better approach to type texts instead of a form
+ * with lots of input fields.
+ */
 class ModalInput extends Component {
 
+    /**
+     * Default constructor.
+     */
     constructor(props) {
         super(props)
         const { value = '' } = props
         this.state = { value }
     }
 
+    /**
+     * Listener called when user cancel the editing.
+     */
     onCancelInput() {
         const { onCancel = () => {} } = this.props
         onCancel()
     }
 
+    /**
+     * Listener called when user finish typing and closed the modal.
+     * A simple validation of at least on word is made.
+     */
     onFinishInput() {
         const { onFinish = () => {} } = this.props
         const { value = '' } = this.state
@@ -27,6 +42,9 @@ class ModalInput extends Component {
         }
     }
 
+    /**
+     * Render our component in the screen.
+     */
     render() {
         const { title, placeholder, maxLength } = this.props
         const { value } = this.state

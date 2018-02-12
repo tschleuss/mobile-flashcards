@@ -9,39 +9,54 @@ import Badge from '../../components/Badge'
 import ModalInput from '../../components/ModalInput'
 import styles from './styles'
 
+/**
+ * Display a list of decks with option to add new ones.
+ */
 class DeckList extends Component {
 
+    /**
+     * Default constructor.
+     */
     constructor(prop) {
         super(prop)
         this.state = { creating: false }
     }
 
+    /**
+     * Redirect the user to the details of the selected deck.
+     */
     openDeckDetails(deck) {
         const { navigation } = this.props
         NavigationHelper.getInstance().setRootNavigaton(navigation) // BAD!!!
         navigation.push('DeckView', { deck })
     }
 
+    /**
+     * Listener called when user cancel the creation of a deck.
+     */
     onCancelCreating() {
         this.setState({ creating: false })
     }
 
+    /**
+     * Listener called when user finish the creation of a deck.
+     */
     onFinishCreating(name) {
         this.props.addDeck(name)
-        this.setState(state => ({
-            ...state,
-            creating: false
-        }))
+        this.setState({ creating: false })
     }
 
+    /**
+     * Display a modal to create a new deck.
+     */
     createNewDeck() {
-        this.setState(state => ({
-            ...state,
-            creating: true
-        }))
+        this.setState({ creating: true })
     }
 
-    renderItem({ item }) {
+    /**
+     * This function render what will be displayed in each row of the list.
+     */
+    renderRow({ item }) {
         return (
             <TouchableOpacity 
                 activeOpacity={0.8} 
@@ -59,10 +74,16 @@ class DeckList extends Component {
         )
     }
 
+    /**
+     * Define a key for each row of the list.
+     */
     keyExtractor(item, index) {
         return index
     }
 
+    /**
+     * Render our component in the screen.
+     */
     render() {
         const { creating } = this.state
         const { decks } = this.props
@@ -82,7 +103,7 @@ class DeckList extends Component {
                         data={decks}
                         extraData={this.state}
                         keyExtractor={this.keyExtractor.bind(this)}
-                        renderItem={this.renderItem.bind(this)}
+                        renderItem={this.renderRow.bind(this)}
                         style={styles.list}
                     />
                 ) : (

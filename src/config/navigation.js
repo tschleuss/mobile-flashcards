@@ -5,6 +5,9 @@ import DeckDetails from '../screens/DeckDetails'
 import DeckCards from '../screens/DeckCards'
 import DeckQuiz from '../screens/DeckQuiz'
 
+/**
+ * Define our stack navigator used to show deck list.
+ */
 export const MainNavigator = StackNavigator(
     {
         DeckList: {
@@ -37,6 +40,9 @@ export const MainNavigator = StackNavigator(
     }
 )
 
+/**
+ * Define our tab navigator used to show deck options.
+ */
 export const DeckTabs = TabNavigator(
     {
         DeckDetails: {

@@ -6,13 +6,24 @@ import AnimateNumber from 'react-native-animate-number'
 import Card from '../../components/Card'
 import styles from './styles'
 
+/**
+ * Modal used to display the quiz for a deck.
+ */
 class ModalQuiz extends Component {
 
+    /**
+     * Default constructor.
+     */
     constructor(props) {
         super(props)
         this.state = this.getInitialState(props)
     }
 
+    /**
+     * Define the initial state of this component.
+     * Here we create a copy of current deck because every
+     * answered question will be removed from it.
+     */
     getInitialState(props) {
         const cards = props.cards.filter(c => c)
         const total = cards.length
@@ -30,19 +41,34 @@ class ModalQuiz extends Component {
         }
     }
 
+    /**
+     * Preload a imagem as soon as the component will mount.
+     * At some times, using the image directly on 'render' it delay to show up.
+     */
     componentWillMount() {
-        this.finishLogo = (<Image style={styles.scoreLogo} resizeMode="contain" source={require('../../images/finish.png')} />)
+        const imgUrl = require('../../images/finish.png')
+        this.finishLogo = (<Image style={styles.scoreLogo} resizeMode="contain" source={imgUrl} />)
     }
 
+    /** 
+     * Listener called when user closes the quiz modal.
+     */
     closeQuiz() {
         const { onClose } = this.props
         onClose()
     }
 
+    /** 
+     * Listener called when user tap to display the card answer.
+     */
     showAnswer() {
         this.setState({ showButtons: false, isFlipped: true })
     }
 
+    /**
+     * Listener called when user tap the if 
+     * they know tha answer for a question.
+     */
     answerQuestion(wasCorrect) {
         this.setState(state => {
             const answers = state.answers.concat(wasCorrect)
@@ -55,18 +81,32 @@ class ModalQuiz extends Component {
                 isFlipped: false
             }
         }, () => {
+            // FIXME - Wait for the flip animation ends. Not the best solution.
             setTimeout(() => this.renderNextCard(), 150)
         })
     }
 
+    /**
+     * Listener called when the card starts to flip.
+     * Here we disable all buttons to not have problems 
+     * with animations and async operations.
+     */
     onFlipStart(fromIsFlipped) {
         this.setState({ isFlipped: !fromIsFlipped, showButtons: false })
     }
 
+    /**
+     * Listener called when the card ends to flip.
+     * Here we enable buttons again.
+     */
     onFlipEnd(isFlipped) {
         this.setState({ isFlipped, showButtons: true })
     }
 
+    /** 
+     * Render the next card if exists, otherwise
+     * we should display the score, because the quiz has ended.
+     */
     renderNextCard() {
         const { answers, total } = this.state
         if (answers.length === total) {
@@ -76,24 +116,39 @@ class ModalQuiz extends Component {
         }
     }
 
+    /** 
+     * Display the final score on screen.
+     */
     displayScores() {
         this.setState({ displayScore: true })
     }
 
+    /** 
+     * Display a retry option when quiz ends.
+     */
     displayRetryOptions() {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
         this.setState({ displayRetry: true })
     }
 
+    /**
+     * Randomicaly remove and return a card from the deck.
+     */
     getNextCard(cards) {
         return cards.splice(Math.floor(Math.random() * cards.length), 1).pop()
     }
 
+    /** 
+     * Listener called to reset current quiz and start again.
+     */
     retryQuiz() {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
         this.setState(state => this.getInitialState(this.props))
     }
 
+    /**
+     * This function render what will be displayed in the front part of the card.
+     */
     renderFront(card = {}) {
         const { total, answers } = this.state
         return (
@@ -106,6 +161,9 @@ class ModalQuiz extends Component {
         )
     }
 
+    /**
+     * This function render what will be displayed in the back part of the card.
+     */
     renderBack(card = {}) {
         const { total, answers } = this.state
         return (
@@ -118,10 +176,16 @@ class ModalQuiz extends Component {
         )
     }
 
+    /**
+     * Format users score to display on screen.
+     */
     formatScore(value) {
         return `${parseFloat(value).toFixed(0)}%`
     }
 
+    /**
+     * Render our component in the screen.
+     */
     render() {
 
         const { card, progress, isFlipped, score } = this.state
