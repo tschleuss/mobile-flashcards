@@ -50,12 +50,19 @@ class DeckList extends Component {
      * Listener called when user finish the creation of a deck.
      */
     onFinishCreating(name) {
-        this.props.addDeck(name)
+        this.props.addDeck(this.formatName(name))
         this.setState({ creating: false }, () => {
             const { decks } = this.props
             const deck = decks[decks.length - 1]
             this.openDeckDetails(deck)
         })
+    }
+
+    /**
+     * Remove new lines for deck's title.
+     */
+    formatName(name) {
+        return name.replace(/[\r\n]+/g, ' ').trim()
     }
 
     /**
@@ -107,7 +114,7 @@ class DeckList extends Component {
                     <ModalInput 
                         title={'Deck\'s name'}
                         placeholder={'Enter the name ...'}
-                        maxLength={30}
+                        maxLength={20}
                         onCancel={() => this.onCancelCreating()}
                         onFinish={name => this.onFinishCreating(name)}/>
                 )}
