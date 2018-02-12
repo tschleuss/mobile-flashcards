@@ -6,6 +6,9 @@ import { FlatList, LayoutAnimation } from 'react-native'
 /**
  * Display a custom FlatList that can handle scroll and notify it parent
  * to display or hide floating action buttons.
+ * 
+ * Component created based on: 
+ * https://gist.github.com/hisokakei/25ace65e3df656313990b710354e1541
  */
 class ListView extends Component {
 
