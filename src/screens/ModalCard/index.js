@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { View, Text, Modal, Alert, TouchableOpacity } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
+import { formatInputTexts } from '../../helper/stringHelper'
 import ModalInput from '../../components/ModalInput'
 import Card from '../../components/Card'
 import styles from './styles'
@@ -88,10 +89,11 @@ class ModalCard extends Component {
     onFinishEditing(type, value) {
         this.setState(state => {
             const nState = { editing: false }
+            const text = formatInputTexts(value)
             if (type === this.TYPE_QUESTION) {
-                nState.question = value
+                nState.question = text
             } else {
-                nState.answer = value
+                nState.answer = text
             }
             return nState
         })

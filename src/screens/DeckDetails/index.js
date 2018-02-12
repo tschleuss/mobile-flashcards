@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { removeDeck, saveDeck } from '../../actions/actionCreators'
 import { FontAwesome } from '@expo/vector-icons'
+import { formatInputTexts } from '../../helper/stringHelper'
 import ModalInput from '../../components/ModalInput'
 import CardStack from '../../components/CardStack'
 import NavigationHelper from '../../helper/navigationHelper'
@@ -51,8 +52,9 @@ class DeckDetails extends Component {
     /**
      * Listener called when user finish the edit of the deck.
      */
-    onFinishEditing(title) {
+    onFinishEditing(value) {
         const { deck } = this.props
+        const title = formatInputTexts(value)
         this.props.saveDeck({ ...deck, title })
         this.setState({ editing: false })
     }

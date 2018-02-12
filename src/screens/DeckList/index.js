@@ -4,6 +4,7 @@ import { Text, View, TouchableHighlight, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { Entypo } from '@expo/vector-icons'
 import { addDeck } from '../../actions/actionCreators'
+import { formatInputTexts } from '../../helper/stringHelper'
 import NavigationHelper from '../../helper/navigationHelper'
 import ListView from '../../components/ListView'
 import CardStack from '../../components/CardStack'
@@ -50,19 +51,12 @@ class DeckList extends Component {
      * Listener called when user finish the creation of a deck.
      */
     onFinishCreating(name) {
-        this.props.addDeck(this.formatName(name))
+        this.props.addDeck(formatInputTexts(name))
         this.setState({ creating: false }, () => {
             const { decks } = this.props
             const deck = decks[decks.length - 1]
             this.openDeckDetails(deck)
         })
-    }
-
-    /**
-     * Remove new lines for deck's title.
-     */
-    formatName(name) {
-        return name.replace(/[\r\n]+/g, ' ').trim()
     }
 
     /**

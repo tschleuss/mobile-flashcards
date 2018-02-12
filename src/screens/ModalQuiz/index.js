@@ -38,7 +38,8 @@ class ModalQuiz extends Component {
             showButtons: true,
             displayScore: false,
             displayRetry: false,
-            progress: 0
+            progress: 0,
+            canClose: true
         }
     }
 
@@ -56,7 +57,10 @@ class ModalQuiz extends Component {
      */
     closeQuiz() {
         const { onClose } = this.props
-        onClose()
+        const { canClose } = this.state
+        if(canClose) {
+            onClose()
+        }
     }
 
     /** 
@@ -121,7 +125,7 @@ class ModalQuiz extends Component {
      * Display the final score on screen.
      */
     displayScores() {
-        this.setState({ displayScore: true })
+        this.setState({ canClose: false, displayScore: true })
     }
 
     /** 
@@ -129,7 +133,7 @@ class ModalQuiz extends Component {
      */
     displayRetryOptions() {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
-        this.setState({ displayRetry: true })
+        this.setState({ canClose: true, displayRetry: true })
     }
 
     /**
