@@ -223,7 +223,7 @@ const mapStateToProps = (decks, props) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    addCard: (deckId, question, answer) => dispatch(addCard(deckId, question, answer)),
+    addCard: (deckId, card) => dispatch(addCard(deckId, card)),
     removeCard: (deckId, cardId) => dispatch(removeCard(deckId, cardId)),
     saveCard: (deckId, card) => dispatch(saveCard(deckId, card))
 })

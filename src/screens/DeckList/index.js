@@ -3,7 +3,7 @@ import { FlatList, Text, View, TouchableHighlight, TouchableOpacity } from 'reac
 import { connect } from 'react-redux'
 import { Entypo } from '@expo/vector-icons'
 import { addDeck } from '../../actions/actionCreators'
-import NavigationHelper from '../../helper/NavigationHelper'
+import NavigationHelper from '../../helper/navigationHelper'
 import CardStack from '../../components/CardStack'
 import Badge from '../../components/Badge'
 import ModalInput from '../../components/ModalInput'

@@ -1,5 +1,24 @@
 {
     "expo": {
-        "sdkVersion": "25.0.0"
+        "sdkVersion": "25.0.0",
+        "orientation": "portrait",
+        "name": "mobile-flashcards",
+        "description": "A fun way to prepare for tests and memorize things!",
+        "slug": "mobile-flashcards",
+        "version": "1.0.0",
+        "platforms": ["ios"],
+        "githubUrl": "https://github.com/tschleuss/mobile-flashcards",
+        "icon": "./src/images/icon.png",
+        "notification": {
+            "icon": "./src/images/notification.png"
+        },
+        "ios": {
+            "bundleIdentifier": "br.com.tschleuss.mobile.flahscards",
+            "buildNumber": "1.0.0"
+        },
+        "android": {
+            "package": "br.com.tschleuss.mobile.flahscards",
+            "versionCode": 1
+        }
     }
 }

@@ -3,6 +3,7 @@ import { View, Text, StatusBar, AppState, AsyncStorage } from 'react-native'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { MainNavigator } from '../../config/navigation'
+import { setupLocalNotification } from '../../helper/notification'
 import reducer from '../../reducers'
 import styles from './styles'
 
@@ -17,15 +18,19 @@ export default class App extends Component {
     }
 
     componentWillMount() {
-        AppState.addEventListener('change', this._handleAppStateChange.bind(this))
-        this._syncStorageWithState()
+        AppState.addEventListener('change', this.handleAppStateChange.bind(this))
+        this.syncStorageWithState()
+    }
+
+    componentDidMount() {
+        setupLocalNotification()
     }
 
     componentWillUnmount() {
-        AppState.removeEventListener('change', this._handleAppStateChange.bind(this))
+        AppState.removeEventListener('change', this.handleAppStateChange.bind(this))
     }
 
-    _syncStorageWithState() {
+    syncStorageWithState() {
         this.setState({ isStoreLoading: true })
         AsyncStorage.getItem('completeStore')
             .then(value => {
@@ -39,7 +44,7 @@ export default class App extends Component {
             })
     }
 
-    _handleAppStateChange(currentAppState) {
+    handleAppStateChange(currentAppState) {
         const storingValue = JSON.stringify(this.state.store.getState())
         AsyncStorage.setItem('completeStore', storingValue)
     }

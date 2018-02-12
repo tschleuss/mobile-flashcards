@@ -53,6 +53,9 @@ export default StyleSheet.create({
             width: 0
         }
     },
+    buttonDisabled: {
+        opacity: 0.4
+    },
     buttonText: {
         fontSize: 18,
         color: '#fff',

@@ -5,11 +5,6 @@ function decks(state = initialState, action) {
 
     switch (action.type) {
 
-        case ActionTypes.GET_DECKS:
-            return {
-                ...state
-            }
-
         case ActionTypes.ADD_DECK:
             return [...state, {
                 id: Date.now(),
@@ -25,13 +20,8 @@ function decks(state = initialState, action) {
                 if (deck.id === action.deck.id) {
                     return action.deck
                 }
-                return deck
+                return { ...deck }
             })
-
-        case ActionTypes.GET_CARDS:
-            return {
-                ...state
-            }
 
         case ActionTypes.ADD_CARD:
             return state.map(deck => {
@@ -41,7 +31,7 @@ function decks(state = initialState, action) {
                         id: Date.now()
                     })
                 }
-                return deck
+                return { ...deck }
             })
 
         case ActionTypes.REMOVE_CARD:
@@ -50,7 +40,7 @@ function decks(state = initialState, action) {
                 if (deck.id === action.deckId) {
                     nDeck.cards = nDeck.cards.filter(c => c.id !== action.cardId)
                 }
-                return nDeck
+                return { ...nDeck }
             })
 
         case ActionTypes.SAVE_CARD:
@@ -60,10 +50,10 @@ function decks(state = initialState, action) {
                         if (card.id === action.card.id) {
                             return action.card
                         }
-                        return card
+                        return { ...card }
                     })
                 }
-                return deck
+                return { ...deck }
             })
 
         default:

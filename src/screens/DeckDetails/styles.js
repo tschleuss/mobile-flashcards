@@ -21,11 +21,16 @@ export default StyleSheet.create({
         alignItems: 'flex-start'
     },
     cardInfoContainer: {
-        flexDirection: 'column',
+        flexDirection: 'row',
         alignItems: 'flex-start'
     },
     cardLabel: {
-        fontWeight: 'bold'
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginRight: 5
+    },
+    cardValue: {
+        fontSize: 20
     },
     btn: {
         position: 'absolute',

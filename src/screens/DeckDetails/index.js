@@ -5,7 +5,7 @@ import { removeDeck, saveDeck } from '../../actions/actionCreators'
 import { FontAwesome } from '@expo/vector-icons'
 import ModalInput from '../../components/ModalInput'
 import CardStack from '../../components/CardStack'
-import NavigationHelper from '../../helper/NavigationHelper'
+import NavigationHelper from '../../helper/navigationHelper'
 import styles from './styles'
 
 class DeckDetails extends Component {
@@ -15,7 +15,12 @@ class DeckDetails extends Component {
         this.state = { editing: false }
     }
 
+    componentWillReceiveProps(newProps) {
+        console.log(`componentWillReceiveProps: ${newProps.deck.cards.length}`)
+    }
+
     shouldComponentUpdate(nextProps, nextState, nextContext) {
+        console.log(`shouldComponentUpdate: ${nextProps.deck.cards.length}`)
         if (typeof nextProps.deck === 'undefined') {
             return false
         }
@@ -70,11 +75,14 @@ class DeckDetails extends Component {
                         onFinish={value => this.onFinishEditing(value)}/>
                 )}
                 <CardStack height={200}>
-                    <View
-                        style={styles.card}>
+                    <View style={styles.card}>
                         <View style={styles.cardInfoContainer}>
-                            <Text style={styles.cardLabel}>Name</Text>
-                            <Text>{deck.title}</Text>
+                            <Text style={styles.cardLabel}>Name:</Text>
+                            <Text style={styles.cardValue}>{deck.title}</Text>
+                        </View>
+                        <View style={styles.cardInfoContainer}>
+                            <Text style={styles.cardLabel}>Cards:</Text>
+                            <Text style={styles.cardValue}>{deck.cards.length}</Text>
                         </View>
                     </View>
                     <TouchableOpacity
