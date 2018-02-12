@@ -1,17 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {
-    Alert,
-    FlatList,
-    View,
-    Text,
-    TouchableOpacity,
-    TouchableHighlight,
-    LayoutAnimation
-} from 'react-native'
+import { Alert, View, Text, TouchableOpacity, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import { addCard, removeCard, saveCard } from '../../actions/actionCreators'
 import { Entypo, FontAwesome } from '@expo/vector-icons'
+import ListView from '../../components/ListView'
 import Card from '../../components/Card'
 import ModalCard from '../ModalCard'
 import styles from './styles'
@@ -32,9 +25,6 @@ class DeckCards extends Component {
             editing: false,
             creating: false
         }
-        this.listViewOffset = 0
-        this.listViewHeight = 0
-        this.listViewContentHeight = 0
     }
 
     /**
@@ -166,60 +156,11 @@ class DeckCards extends Component {
     }
 
     /**
-     * Define a key for each row of the list.
+     * Listener called when we should hide or show 
+     * the floating action button.
      */
-    keyExtractor(item, index) {
-        return index
-    }
-
-    /**
-     * Some list listeners to use alongside 'onScroll'.
-     */
-    onLayout(event) {
-        const { height } = event.nativeEvent.layout
-        this.listViewHeight = height
-    }
-
-    /**
-     * Some list listeners to use alongside 'onScroll'.
-     */
-    onContentSizeChange(contentWidth, contentHeight) {
-        this.listViewContentHeight = contentHeight
-    }
-
-    /**
-     * Listener to know when user scroll the list, so we can hide or action button.
-     */
-    onScroll(event) {
-
-        const CustomLayoutLinear = {
-            duration: 100,
-            create: {
-                type: LayoutAnimation.Types.linear,
-                property: LayoutAnimation.Properties.opacity
-            },
-            update: {
-                type: LayoutAnimation.Types.linear,
-                property: LayoutAnimation.Properties.opacity
-            },
-            delete: {
-                type: LayoutAnimation.Types.linear,
-                property: LayoutAnimation.Properties.opacity
-            }
-        }
-
-        const limit = this.listViewContentHeight - this.listViewHeight
-        const offset = event.nativeEvent.contentOffset.y
-        const currentOffset = offset > limit ? limit : offset
-        const direction = currentOffset > 0 && currentOffset >= this.listViewOffset ? 'down' : 'up'
-        const isActionButtonVisible = direction === 'up'
-
-        if (isActionButtonVisible !== this.state.isActionButtonVisible) {
-            LayoutAnimation.configureNext(CustomLayoutLinear)
-            this.setState({ isActionButtonVisible })
-        }
-
-        this.listViewOffset = currentOffset
+    shouldDisplayActionButton(isActionButtonVisible) {
+        this.setState({ isActionButtonVisible })
     }
 
     /**
@@ -227,7 +168,7 @@ class DeckCards extends Component {
      */
     render() {
         const { cards } = this.props.deck
-        const { card, editing, creating } = this.state
+        const { card, editing, creating, isActionButtonVisible } = this.state
         const empty = cards.length === 0
         return (
             <View style={styles.screenContainer}>
@@ -248,16 +189,12 @@ class DeckCards extends Component {
                     />
                 )}
                 {!empty ? (
-                    <FlatList
+                    <ListView
                         data={cards}
                         extraData={this.props}
-                        keyExtractor={this.keyExtractor.bind(this)}
                         renderItem={this.renderRow.bind(this)}
                         style={styles.list}
-                        onScroll={this.onScroll.bind(this)}
-                        onContentSizeChange={this.onContentSizeChange.bind(this)}
-                        onLayout={this.onLayout.bind(this)}
-                        scrollEventThrottle={1}/>
+                        onChangeState={this.shouldDisplayActionButton.bind(this)}/>
                 ) : (
                     <View style={styles.emptyContainer}>
                         <Entypo name="emoji-flirt" size={120} style={styles.emptyIcon} />
@@ -266,7 +203,7 @@ class DeckCards extends Component {
                         </Text>
                     </View>
                 )}
-                {this.state.isActionButtonVisible && (
+                {isActionButtonVisible && (
                     <TouchableHighlight
                         style={styles.addButton}
                         underlayColor="#41567a"
@@ -292,7 +229,7 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(DeckCards)
 
 DeckCards.propTypes = {
-    deck: PropTypes.object.isRequired,
+    deck: PropTypes.object,
     addCard: PropTypes.func.isRequired,
     saveCard: PropTypes.func.isRequired,
     removeCard: PropTypes.func.isRequired

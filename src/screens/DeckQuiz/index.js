@@ -121,7 +121,6 @@ const mapStateToProps = (decks, props) => ({
 export default connect(mapStateToProps)(DeckQuiz)
 
 DeckQuiz.propTypes = {
-    deck: PropTypes.object.isRequired,
-    cards: PropTypes.array.isRequired,
+    deck: PropTypes.object,
     navigation: PropTypes.object.isRequired
 }

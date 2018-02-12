@@ -144,7 +144,7 @@ const mapDispatchToProps = (dispatch, props) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(DeckDetails)
 
 DeckDetails.propTypes = {
-    deck: PropTypes.object.isRequired,
+    deck: PropTypes.object,
     saveDeck: PropTypes.func.isRequired,
     removeDeck: PropTypes.func.isRequired
 }

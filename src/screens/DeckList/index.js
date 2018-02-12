@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { FlatList, Text, View, TouchableHighlight, TouchableOpacity } from 'react-native'
+import { Text, View, TouchableHighlight, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { Entypo } from '@expo/vector-icons'
 import { addDeck } from '../../actions/actionCreators'
 import NavigationHelper from '../../helper/navigationHelper'
+import ListView from '../../components/ListView'
 import CardStack from '../../components/CardStack'
 import Badge from '../../components/Badge'
 import ModalInput from '../../components/ModalInput'
@@ -18,9 +19,12 @@ class DeckList extends Component {
     /**
      * Default constructor.
      */
-    constructor(prop) {
-        super(prop)
-        this.state = { creating: false }
+    constructor() {
+        super()
+        this.state = {
+            isActionButtonVisible: true,
+            creating: false
+        }
     }
 
     /**
@@ -76,17 +80,18 @@ class DeckList extends Component {
     }
 
     /**
-     * Define a key for each row of the list.
+     * Listener called when we should hide or show 
+     * the floating action button.
      */
-    keyExtractor(item, index) {
-        return index
+    shouldDisplayActionButton(isActionButtonVisible) {
+        this.setState({ isActionButtonVisible })
     }
 
     /**
      * Render our component in the screen.
      */
     render() {
-        const { creating } = this.state
+        const { creating, isActionButtonVisible } = this.state
         const { decks } = this.props
         const empty = decks.length === 0
         return (
@@ -100,13 +105,12 @@ class DeckList extends Component {
                         onFinish={name => this.onFinishCreating(name)}/>
                 )}
                 {!empty ? (
-                    <FlatList
+                    <ListView
                         data={decks}
                         extraData={this.state}
-                        keyExtractor={this.keyExtractor.bind(this)}
                         renderItem={this.renderRow.bind(this)}
                         style={styles.list}
-                    />
+                        onChangeState={this.shouldDisplayActionButton.bind(this)}/>
                 ) : (
                     <View style={styles.emptyContainer}>
                         <Entypo name="emoji-flirt" size={120} style={styles.emptyIcon} />
@@ -115,12 +119,14 @@ class DeckList extends Component {
                         </Text>
                     </View>
                 )}
-                <TouchableHighlight
-                    style={styles.addButton}
-                    underlayColor="#41567a"
-                    onPress={() => this.createNewDeck()}>
-                    <Entypo name="plus" size={40} style={styles.buttonIcon} />
-                </TouchableHighlight>
+                {isActionButtonVisible && (
+                    <TouchableHighlight
+                        style={styles.addButton}
+                        underlayColor="#41567a"
+                        onPress={() => this.createNewDeck()}>
+                        <Entypo name="plus" size={40} style={styles.buttonIcon} />
+                    </TouchableHighlight>
+                )}
             </View>
         )
     }
