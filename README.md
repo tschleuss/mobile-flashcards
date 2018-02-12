@@ -32,4 +32,4 @@ To run the app in the iOS simulator, take a look at the [Expo docs](https://docs
 
 ![Screenshot small](https://i.imgur.com/YBLICCJ.png "Screenshot small")
 ![Screenshot small](https://i.imgur.com/yVsiDcf.png "Screenshot small")
-![Screenshot small](https://i.imgur.com/YBux5Kq.png "Screenshot small")
+![Screenshot small](https://i.imgur.com/1rTr961.png "Screenshot small")
