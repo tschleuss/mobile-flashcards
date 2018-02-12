@@ -106,7 +106,7 @@ class DeckQuiz extends Component {
                         activeOpacity={0.6}
                         onPress={() => this.startQuiz()}
                         style={styles.startButton}>
-                        <Text style={styles.buttonText}>Start Quiz!</Text>
+                        <Text style={styles.buttonText}>Start a Quiz!</Text>
                     </TouchableOpacity>
                 </View>
             </View>

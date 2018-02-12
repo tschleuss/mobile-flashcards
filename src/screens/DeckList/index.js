@@ -29,10 +29,13 @@ class DeckList extends Component {
 
     /**
      * Redirect the user to the details of the selected deck.
+     * 
+     * FIXME - I know it's not a good idea to use Singleton, but I didn't manage to 
+     * find / accquire / retrieve my stack navigator navigation reference from tab navigator.
      */
     openDeckDetails(deck) {
         const { navigation } = this.props
-        NavigationHelper.getInstance().setRootNavigaton(navigation) // BAD!!!
+        NavigationHelper.getInstance().setRootNavigaton(navigation)
         navigation.push('DeckView', { deck })
     }
 
@@ -48,7 +51,11 @@ class DeckList extends Component {
      */
     onFinishCreating(name) {
         this.props.addDeck(name)
-        this.setState({ creating: false })
+        this.setState({ creating: false }, () => {
+            const { decks } = this.props
+            const deck = decks[decks.length - 1]
+            this.openDeckDetails(deck)
+        })
     }
 
     /**

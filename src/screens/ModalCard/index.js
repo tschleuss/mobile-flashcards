@@ -143,7 +143,7 @@ class ModalCard extends Component {
                     <ModalInput 
                         title={editTitle}
                         placeholder={editPlaceholder}
-                        maxLength={30}
+                        maxLength={205}
                         value={editValue}
                         onCancel={() => this.onCancelEditing() }
                         onFinish={value => this.onFinishEditing(type, value)}

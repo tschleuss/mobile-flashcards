@@ -7,7 +7,7 @@ import initialState from './state'
 function decks(state = initialState, action) {
 
     switch (action.type) {
-        
+
         case ActionTypes.ADD_DECK:
             return [...state, {
                 id: Date.now(),

@@ -72,10 +72,12 @@ class DeckDetails extends Component {
 
     /**
      * Delete the current deck.
+     * FIXME - I know it's not a good idea to use Singleton, but I didn't manage to 
+     * find / accquire / retrieve my stack navigator navigation reference.
      */
     deleteDeck(id) {
         this.props.removeDeck(id)
-        const navigation = NavigationHelper.getInstance().getRootNavigaton() // BAD
+        const navigation = NavigationHelper.getInstance().getRootNavigaton()
         navigation.pop()
     }
 
