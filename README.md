@@ -22,3 +22,14 @@ To run the app in the iOS simulator, take a look at the [Expo docs](https://docs
 ## Licensing
 
 [MIT](./LICENSE)
+
+## Screenshots &middot; [High Resolution](https://imgur.com/a/c7eXH)
+
+![Screenshot small](https://i.imgur.com/JQFeMNo.png "Screenshot small")
+![Screenshot small](https://i.imgur.com/cjKXrTc.png "Screenshot small")
+![Screenshot small](https://i.imgur.com/TarYPnZ.png "Screenshot small")
+
+
+![Screenshot small](https://i.imgur.com/YBLICCJ.png "Screenshot small")
+![Screenshot small](https://i.imgur.com/yVsiDcf.png "Screenshot small")
+![Screenshot small](https://i.imgur.com/YBux5Kq.png "Screenshot small")
