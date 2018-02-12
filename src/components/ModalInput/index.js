@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { View, Text, Modal, TextInput, Alert, TouchableOpacity } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import styles from './styles'
@@ -57,7 +58,7 @@ class ModalInput extends Component {
                 <View style={styles.modalContainer}>
                     <View style={styles.headerContainer}>
                         <TouchableOpacity
-                            style={{ marginTop: 2 }}
+                            style={styles.closeIcon}
                             onPress={() => { this.onCancelInput() }}>
                             <Entypo name="cross" size={32} style={styles.cancelBtn}/>
                         </TouchableOpacity>
@@ -83,3 +84,12 @@ class ModalInput extends Component {
 }
 
 export default ModalInput
+
+ModalInput.propTypes = {
+    value: PropTypes.string,
+    title: PropTypes.string,
+    placeholder: PropTypes.string,
+    maxLength: PropTypes.number,
+    onCancel: PropTypes.func,
+    onFinish: PropTypes.func
+}

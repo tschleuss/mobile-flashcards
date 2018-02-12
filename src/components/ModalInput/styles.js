@@ -39,5 +39,8 @@ export default StyleSheet.create({
         textAlignVertical: 'top',
         fontSize: 20,
         marginTop: 15
+    },
+    closeIcon: {
+        marginTop: 2
     }
 })

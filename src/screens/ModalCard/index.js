@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { View, Text, Modal, Alert, TouchableOpacity } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import ModalInput from '../../components/ModalInput'
@@ -196,3 +197,8 @@ class ModalCard extends Component {
 }
 
 export default ModalCard
+
+ModalCard.propTypes = {
+    onCancel: PropTypes.func,
+    onFinish: PropTypes.func
+}

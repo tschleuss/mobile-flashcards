@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { View, Text, Image, Alert, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import ModalQuiz from '../ModalQuiz'
@@ -118,3 +119,9 @@ const mapStateToProps = (decks, props) => ({
 })
 
 export default connect(mapStateToProps)(DeckQuiz)
+
+DeckQuiz.propTypes = {
+    deck: PropTypes.object.isRequired,
+    cards: PropTypes.array.isRequired,
+    navigation: PropTypes.object.isRequired
+}

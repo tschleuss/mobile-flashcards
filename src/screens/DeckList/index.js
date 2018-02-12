@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { FlatList, Text, View, TouchableHighlight, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { Entypo } from '@expo/vector-icons'
@@ -110,7 +111,7 @@ class DeckList extends Component {
                     <View style={styles.emptyContainer}>
                         <Entypo name="emoji-flirt" size={120} style={styles.emptyIcon} />
                         <Text style={styles.emptyText}>
-                            Seems that you don't have any deck yet! Start creating a new one tapping the plus button below.
+                            Seems that you don&apos;t have any deck yet! Start creating a new one tapping the plus button below.
                         </Text>
                     </View>
                 )}
@@ -132,3 +133,9 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckList)
+
+DeckList.propTypes = {
+    decks: PropTypes.array.isRequired,
+    navigation: PropTypes.object.isRequired,
+    addDeck: PropTypes.func.isRequired
+}

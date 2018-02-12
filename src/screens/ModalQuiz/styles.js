@@ -14,6 +14,9 @@ export default StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between'
     },
+    closeButton: {
+        marginTop: 2
+    },
     closeIcon: {
         color: '#32cdff',
         fontWeight: 'bold'

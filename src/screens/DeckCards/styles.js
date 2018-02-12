@@ -80,5 +80,8 @@ export default StyleSheet.create({
         textAlign: 'center',
         fontSize: 24,
         marginTop: 15
+    },
+    list: {
+        paddingTop: 20
     }
 })

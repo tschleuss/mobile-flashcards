@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { View, Text, TouchableOpacity, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { removeDeck, saveDeck } from '../../actions/actionCreators'
@@ -141,3 +142,9 @@ const mapDispatchToProps = (dispatch, props) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckDetails)
+
+DeckDetails.propTypes = {
+    deck: PropTypes.object.isRequired,
+    saveDeck: PropTypes.func.isRequired,
+    removeDeck: PropTypes.func.isRequired
+}

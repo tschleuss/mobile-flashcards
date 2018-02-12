@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { DeckTabs } from '../../config/navigation'
 
 /**
@@ -7,4 +8,8 @@ import { DeckTabs } from '../../config/navigation'
 export default function DeckView({ navigation }) {
     const { deck } = navigation.state.params
     return <DeckTabs screenProps={{ deck }} />
+}
+
+DeckView.propTypes = {
+    navigation: PropTypes.object.isRequired
 }

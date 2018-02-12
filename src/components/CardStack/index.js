@@ -1,5 +1,7 @@
 import React from 'react'
-import { View, TouchableOpacity } from 'react-native'
+import PropTypes from 'prop-types'
+import StylePropType from 'react-style-proptype'
+import { View } from 'react-native'
 import Card from '../Card'
 import styles from './styles'
 
@@ -26,4 +28,13 @@ export default function CardStack({ height = 50, distance = 8, count = 2, style,
             {cards.map(card => <Card key={card.key} style={card.style} />)}
         </View>
     )
+}
+
+CardStack.propTypes = {
+    height: PropTypes.number,
+    distance: PropTypes.number,
+    count: PropTypes.number,
+    style: StylePropType,
+    onPress: PropTypes.func,
+    children: PropTypes.node
 }

@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import StylePropType from 'react-style-proptype'
 import { View, Easing, TouchableOpacity } from 'react-native'
 import FlipView from 'react-native-flip-view-next'
 import styles from './styles'
@@ -7,13 +9,13 @@ import styles from './styles'
  * Display a stylized empty white card with rounder corners.
  */
 class Card extends Component {
-    
+
     /**
      * Default constructor.
      */
     constructor(props) {
         super(props)
-        this.state = { 
+        this.state = {
             flip: props.flip || false,
             isFlipped: props.isFlipped || false
         }
@@ -68,7 +70,7 @@ class Card extends Component {
      */
     flip() {
         const { flip } = this.state
-        if(flip === true) {
+        if (flip === true) {
             this.setState(state => ({ isFlipped: !state.isFlipped }))
         }
     }
@@ -97,3 +99,15 @@ class Card extends Component {
 }
 
 export default Card
+
+Card.propTypes = {
+    flip: PropTypes.bool,
+    isFlipped: PropTypes.bool,
+    onFlipStart: PropTypes.func,
+    onFlipEnd: PropTypes.func,
+    front: PropTypes.node,
+    back: PropTypes.node,
+    children: PropTypes.node,
+    cardStyle: StylePropType,
+    style: StylePropType.supportingArrays
+}

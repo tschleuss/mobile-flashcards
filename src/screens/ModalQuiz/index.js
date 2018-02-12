@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { View, Text, Modal, Image, TouchableOpacity, LayoutAnimation } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import ProgressBar from 'react-native-progress/Bar'
@@ -203,7 +204,7 @@ class ModalQuiz extends Component {
                         {/* Header */}
                         <View style={styles.headerContainer}>
                             <TouchableOpacity
-                                style={{ marginTop: 2 }}
+                                style={styles.closeButton}
                                 onPress={() => this.closeQuiz()}>
                                 <Entypo name="cross" size={32} style={styles.closeIcon}/>
                             </TouchableOpacity>
@@ -303,3 +304,8 @@ class ModalQuiz extends Component {
 }
 
 export default ModalQuiz
+
+ModalQuiz.propTypes = {
+    cards: PropTypes.array.isRequired,
+    onClose: PropTypes.func
+}

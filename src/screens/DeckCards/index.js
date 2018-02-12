@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
     Alert,
     FlatList,
@@ -252,7 +253,7 @@ class DeckCards extends Component {
                         extraData={this.props}
                         keyExtractor={this.keyExtractor.bind(this)}
                         renderItem={this.renderRow.bind(this)}
-                        style={{ paddingTop: 20 }}
+                        style={styles.list}
                         onScroll={this.onScroll.bind(this)}
                         onContentSizeChange={this.onContentSizeChange.bind(this)}
                         onLayout={this.onLayout.bind(this)}
@@ -261,7 +262,7 @@ class DeckCards extends Component {
                     <View style={styles.emptyContainer}>
                         <Entypo name="emoji-flirt" size={120} style={styles.emptyIcon} />
                         <Text style={styles.emptyText}>
-                            Seems that you don't have any cards yet! Start creating a new one tapping the plus button below.
+                            Seems that you don&apos;t have any cards yet! Start creating a new one tapping the plus button below.
                         </Text>
                     </View>
                 )}
@@ -289,3 +290,10 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckCards)
+
+DeckCards.propTypes = {
+    deck: PropTypes.object.isRequired,
+    addCard: PropTypes.func.isRequired,
+    saveCard: PropTypes.func.isRequired,
+    removeCard: PropTypes.func.isRequired
+}
