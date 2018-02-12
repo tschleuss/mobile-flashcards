@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 
 export default StyleSheet.create({
     screenContainer: {
@@ -41,13 +41,20 @@ export default StyleSheet.create({
         position: 'absolute',
         bottom: 20,
         right: 20,
-        shadowColor: '#000000',
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-        shadowOffset: {
-            height: 1,
-            width: 0
-        }
+        ...Platform.select({
+            ios: {
+                shadowColor: '#000000',
+                shadowOpacity: 0.8,
+                shadowRadius: 2,
+                shadowOffset: {
+                    height: 1,
+                    width: 0
+                }
+            },
+            android: {
+                elevation: 4
+            }
+        })
     },
     buttonIcon: {
         color: '#fff',

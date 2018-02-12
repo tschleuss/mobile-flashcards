@@ -115,7 +115,7 @@ class DeckQuiz extends Component {
 }
 
 const mapStateToProps = (decks, props) => ({
-    deck: decks.find(d => d.id === props.screenProps.deck.id)
+    deck: decks.find(d => d.id === props.screenProps.deckId)
 })
 
 export default connect(mapStateToProps)(DeckQuiz)

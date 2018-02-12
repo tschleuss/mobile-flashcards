@@ -7,7 +7,7 @@ import { DeckTabs } from '../../config/navigation'
  */
 export default function DeckView({ navigation }) {
     const { deck } = navigation.state.params
-    return <DeckTabs screenProps={{ deck }} />
+    return <DeckTabs screenProps={{ deckId: deck.id }} />
 }
 
 DeckView.propTypes = {

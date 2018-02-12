@@ -46,9 +46,9 @@ export default StyleSheet.create({
         flexDirection: 'column'
     },
     card: {
-        height: 200,
-        marginLeft: 50,
-        marginRight: 50
+        height: 250,
+        marginLeft: 25,
+        marginRight: 25
     },
     quizInfoText: {
         position: 'absolute',

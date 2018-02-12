@@ -197,7 +197,8 @@ class ModalQuiz extends Component {
                 transparent={true}
                 hardwareAccelerated={true}
                 animationType={'slide'}
-                visible={true}>
+                visible={true}
+                onRequestClose={() => { this.closeQuiz() }}>
                 <View style={styles.modalContainer}>
                     <View style={styles.quizContainer}>
 

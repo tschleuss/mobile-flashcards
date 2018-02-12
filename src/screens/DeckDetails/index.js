@@ -135,7 +135,7 @@ class DeckDetails extends Component {
 }
 
 const mapStateToProps = (decks, props) => ({
-    deck: decks.find(d => d.id === props.screenProps.deck.id)
+    deck: decks.find(d => d.id === props.screenProps.deckId)
 })
 
 const mapDispatchToProps = (dispatch, props) => ({

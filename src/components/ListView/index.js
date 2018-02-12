@@ -111,7 +111,7 @@ export default ListView
 
 ListView.propTypes = {
     data: PropTypes.array.isRequired,
-    extraData: PropTypes.object.isRequired,
+    extraData: PropTypes.any.isRequired,
     renderItem: PropTypes.func.isRequired,
     onChangeState: PropTypes.func,
     style: StylePropType

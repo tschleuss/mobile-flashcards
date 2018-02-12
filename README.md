@@ -6,7 +6,11 @@ This is the _Mobile Flashcards_ project for the final assessment project for Uda
 
 _Mobile Flashcards_ is a mobile application that allows users to prepare for tests and memorize things! Users can create decks of flashcards, add cards to those decks then take quizzes about it. It also notifies the user daily, with a reminder to study (8 am).
 
-> *This app was only tested on iOS, but should work on Android too*
+### Support
+
+>This app was only tested **iPhone 5** or newer running **iOS 9.0** or above.
+
+>It should work on **Android**, but as it was not the target, some layout styles may not proper appear on that devices.
 
 ## To get started:
 

@@ -36,8 +36,8 @@ export default StyleSheet.create({
         paddingBottom: 35
     },
     card: {
-        marginLeft: 50,
-        marginRight: 50,
+        marginLeft: 25,
+        marginRight: 25,
         height: 200
     },
     cardSpacing: {

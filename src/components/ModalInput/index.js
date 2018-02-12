@@ -54,7 +54,8 @@ class ModalInput extends Component {
                 transparent={true}
                 hardwareAccelerated={true}
                 animationType={'slide'}
-                visible={true}>
+                visible={true}
+                onRequestClose={() => { this.onCancelInput() }}>
                 <View style={styles.modalContainer}>
                     <View style={styles.headerContainer}>
                         <TouchableOpacity

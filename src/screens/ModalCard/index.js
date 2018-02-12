@@ -138,7 +138,8 @@ class ModalCard extends Component {
                 transparent={true}
                 hardwareAccelerated={true}
                 animationType={'slide'}
-                visible={true}>
+                visible={true}
+                onRequestClose={() => { this.cancelEdit() }}>
                 {editing && (
                     <ModalInput 
                         title={editTitle}
