@@ -24,9 +24,9 @@ class DeckCards extends Component {
             editing: false,
             creating: false
         }
-        this._listViewOffset = 0
-        this._listViewHeight = 0
-        this._listViewContentHeight = 0
+        this.listViewOffset = 0
+        this.listViewHeight = 0
+        this.listViewContentHeight = 0
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -65,7 +65,7 @@ class DeckCards extends Component {
     }
 
     askDeleteCard(card) {
-        const { deck } = this.props.screenProps
+        const { deck } = this.props
         const msg = 'Do you really want to exclude this card?'
         const btns = [
             { text: 'Cancel', style: 'cancel' },
@@ -101,8 +101,7 @@ class DeckCards extends Component {
 
     renderBack(item) {
         return (
-            <View
-                style={styles.cardContainer}>
+            <View style={styles.cardContainer}>
                 <Text style={styles.cardText}>{item.answer}</Text>
             </View>
         )
@@ -115,8 +114,7 @@ class DeckCards extends Component {
                     flip={true}
                     style={styles.card}
                     front={this.renderFront(item)}
-                    back={this.renderBack(item)}
-                />
+                    back={this.renderBack(item)}/>
             </View>
         )
     }
@@ -125,16 +123,16 @@ class DeckCards extends Component {
         return index
     }
 
-    _onLayout(event) {
+    onLayout(event) {
         const { height } = event.nativeEvent.layout
-        this._listViewHeight = height
+        this.listViewHeight = height
     }
 
-    _onContentSizeChange(contentWidth, contentHeight) {
-        this._listViewContentHeight = contentHeight
+    onContentSizeChange(contentWidth, contentHeight) {
+        this.listViewContentHeight = contentHeight
     }
 
-    _onScroll(event) {
+    onScroll(event) {
 
         const CustomLayoutLinear = {
             duration: 100,
@@ -152,10 +150,10 @@ class DeckCards extends Component {
             }
         }
 
-        const limit = this._listViewContentHeight - this._listViewHeight
+        const limit = this.listViewContentHeight - this.listViewHeight
         const offset = event.nativeEvent.contentOffset.y
         const currentOffset = offset > limit ? limit : offset
-        const direction = currentOffset > 0 && currentOffset >= this._listViewOffset ? 'down' : 'up'
+        const direction = currentOffset > 0 && currentOffset >= this.listViewOffset ? 'down' : 'up'
         const isActionButtonVisible = direction === 'up'
 
         if (isActionButtonVisible !== this.state.isActionButtonVisible) {
@@ -163,14 +161,15 @@ class DeckCards extends Component {
             this.setState({ isActionButtonVisible })
         }
 
-        this._listViewOffset = currentOffset
+        this.listViewOffset = currentOffset
     }
 
     render() {
-        const { deck } = this.props
+        const { cards } = this.props.deck
         const { card, editing, creating } = this.state
+        const empty = cards.length === 0
         return (
-            <View style={{ flex: 1, backgroundColor: '#32cdff' }}>
+            <View style={styles.screenContainer}>
                 {editing && (
                     <ModalCard 
                         title={'Edit Card'}
@@ -187,17 +186,25 @@ class DeckCards extends Component {
                         onFinish={(question, answer) => this.onFinishCreating(question, answer)}
                     />
                 )}
-                <FlatList
-                    data={deck.cards}
-                    extraData={this.props}
-                    keyExtractor={this.keyExtractor.bind(this)}
-                    renderItem={this.renderItem.bind(this)}
-                    style={{ paddingTop: 20 }}
-                    onScroll={this._onScroll.bind(this)}
-                    onContentSizeChange={this._onContentSizeChange.bind(this)}
-                    onLayout={this._onLayout.bind(this)}
-                    scrollEventThrottle={1}
-                />
+                {!empty ? (
+                    <FlatList
+                        data={cards}
+                        extraData={this.props}
+                        keyExtractor={this.keyExtractor.bind(this)}
+                        renderItem={this.renderItem.bind(this)}
+                        style={{ paddingTop: 20 }}
+                        onScroll={this.onScroll.bind(this)}
+                        onContentSizeChange={this.onContentSizeChange.bind(this)}
+                        onLayout={this.onLayout.bind(this)}
+                        scrollEventThrottle={1}/>
+                ) : (
+                    <View style={styles.emptyContainer}>
+                        <Entypo name="emoji-flirt" size={120} style={styles.emptyIcon} />
+                        <Text style={styles.emptyText}>
+                            Seems that you don't have any cards yet! Start creating a new one tapping the plus button below.
+                        </Text>
+                    </View>
+                )}
                 {this.state.isActionButtonVisible && (
                     <TouchableHighlight
                         style={styles.addButton}

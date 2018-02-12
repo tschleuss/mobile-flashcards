@@ -47,12 +47,11 @@ class ModalCard extends Component {
     }
 
     editCard(type) {
-        this.setState(state => ({
-            ...state,
+        this.setState({
             ...this.getStateForEditType(type),
             type,
             editing: true
-        }))
+        })
     }
 
     onCancelEditing() {
@@ -61,7 +60,7 @@ class ModalCard extends Component {
 
     onFinishEditing(type, value) {
         this.setState(state => {
-            const nState = { ...state, editing: false }
+            const nState = { editing: false }
             if (type === this.TYPE_QUESTION) {
                 nState.question = value
             } else {
@@ -114,10 +113,9 @@ class ModalCard extends Component {
                 )}
                 <View style={styles.modalContainer}>
                     <View style={styles.headerContainer}>
-                        <TouchableOpacity
-                            style={{ marginTop: 2 }}
+                        <TouchableOpacity style={styles.cancelButton}
                             onPress={() => this.cancelEdit()}>
-                            <Entypo name="cross" size={32} style={{ color: '#32cdff', fontWeight: 'bold' }}/>
+                            <Entypo name="cross" size={32} style={styles.cancelIcon}/>
                         </TouchableOpacity>
                         <Text style={styles.modalTitle}>{title}</Text>
                         <TouchableOpacity 

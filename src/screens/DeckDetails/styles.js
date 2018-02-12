@@ -1,31 +1,46 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-    screeen: {
+    screenContainer: {
+        backgroundColor: '#32cdff',
         paddingTop: 20,
         paddingLeft: 15,
-        paddingRight: 15
+        paddingRight: 15,
+        flex: 1
     },
     deck: {
         position: 'relative',
         flex: 1
     },
     card: {
-        left: 0,
-        right: 0,
-        height: 200,
+        flex: 1,
+        padding: 15,
+        alignSelf: 'flex-start',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start'
+    },
+    cardInfoContainer: {
+        flexDirection: 'column',
+        alignItems: 'flex-start'
+    },
+    cardLabel: {
+        fontWeight: 'bold'
+    },
+    btn: {
         position: 'absolute',
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        borderWidth: 0,
-        alignItems: 'center',
-        justifyContent: 'center',
-        shadowColor: 'rgba(0, 0, 0, .20)',
-        shadowOpacity: 0.8,
-        shadowRadius: 14,
-        shadowOffset: {
-            width: 0,
-            height: 4
-        }
+        right: 10
+    },
+    btnRemove: {
+        bottom: 10
+    },
+    iconRemove: {
+        color: '#ff5635'
+    },
+    btnEdit: {
+        top: 10
+    },
+    iconEdit: {
+        color: '#ccc'
     }
 })

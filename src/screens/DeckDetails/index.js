@@ -23,10 +23,7 @@ class DeckDetails extends Component {
     }
 
     editDeck() {
-        this.setState(state => ({
-            ...state,
-            editing: true
-        }))
+        this.setState({ editing: true })
     }
 
     onCancelEditing() {
@@ -54,33 +51,6 @@ class DeckDetails extends Component {
         navigation.pop()
     }
 
-    renderItem({ item }) {
-        return (
-            <View style={styles.row}>
-                <CardStack distance={5} height={70}>
-                    <View
-                        style={{
-                            flex: 1,
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                        <Text
-                            style={{
-                                flex: 1,
-                                marginLeft: 20,
-                                fontWeight: 'bold',
-                                fontSize: 24,
-                                color: '#bbb'
-                            }}>
-                            {item.title}
-                        </Text>
-                    </View>
-                </CardStack>
-            </View>
-        )
-    }
-
     keyExtractor(item, index) {
         return item.title
     }
@@ -89,7 +59,7 @@ class DeckDetails extends Component {
         const { editing } = this.state
         const { deck } = this.props
         return (
-            <View style={[{ backgroundColor: '#32cdff', flex: 1 }, styles.screeen]}>
+            <View style={styles.screenContainer}>
                 {editing && (
                     <ModalInput 
                         title={'Deck\'s name'}
@@ -101,43 +71,23 @@ class DeckDetails extends Component {
                 )}
                 <CardStack height={200}>
                     <View
-                        style={{
-                            flex: 1,
-                            padding: 15,
-                            alignSelf: 'flex-start',
-                            flexDirection: 'column',
-                            justifyContent: 'flex-start',
-                            alignItems: 'flex-start'
-                        }}>
-                        <View style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-                            <Text style={{ fontWeight: 'bold' }}>Name</Text>
+                        style={styles.card}>
+                        <View style={styles.cardInfoContainer}>
+                            <Text style={styles.cardLabel}>Name</Text>
                             <Text>{deck.title}</Text>
                         </View>
-                        {deck.description && (
-                            <View
-                                style={{
-                                    flexDirection: 'column',
-                                    marginTop: 10,
-                                    alignItems: 'flex-start'
-                                }}>
-                                <Text style={{ fontWeight: 'bold' }}>Description</Text>
-                                <Text style={{ flex: 1, flexWrap: 'wrap' }}>
-                                    {deck.description}
-                                </Text>
-                            </View>
-                        )}
                     </View>
                     <TouchableOpacity
                         activeOpacity={0.6}
                         onPress={() => this.editDeck()}
-                        style={{ position: 'absolute', top: 10, right: 10 }}>
-                        <FontAwesome name="gear" size={32} style={{ color: '#ccc' }} />
+                        style={[styles.btn, styles.btnEdit]}>
+                        <FontAwesome name="gear" size={32} style={styles.iconEdit} />
                     </TouchableOpacity>
                     <TouchableOpacity
                         activeOpacity={0.6}
                         onPress={() => this.askDeleteDeck(deck)}
-                        style={{ position: 'absolute', bottom: 10, right: 10 }}>
-                        <FontAwesome name="trash" size={32} style={{ color: '#ff5635' }} />
+                        style={[styles.btn, styles.btnRemove]}>
+                        <FontAwesome name="trash" size={32} style={styles.iconRemove} />
                     </TouchableOpacity>
                 </CardStack>
             </View>

@@ -1,6 +1,10 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
+    screenContainer: {
+        backgroundColor: '#32cdff',
+        flex: 1
+    },
     deckContainer: {
         flex: 1,
         flexDirection: 'row',
@@ -14,17 +18,17 @@ export default StyleSheet.create({
         fontSize: 24,
         color: '#bbb'
     },
-    list: { 
-        paddingTop: 20 
+    list: {
+        paddingTop: 20
     },
     row: {
         paddingBottom: 35,
         paddingLeft: 15,
         paddingRight: 15
     },
-    badge: { 
-        marginLeft: 10, 
-        marginRight: 20 
+    badge: {
+        marginLeft: 10,
+        marginRight: 20
     },
     addButton: {
         backgroundColor: '#354868',
@@ -45,8 +49,23 @@ export default StyleSheet.create({
             width: 0
         }
     },
-    buttonIcon: { 
+    buttonIcon: {
         color: '#fff',
         marginTop: 5
+    },
+    emptyContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 30
+    },
+    emptyIcon: {
+        color: '#fff'
+    },
+    emptyText: {
+        color: '#fff',
+        textAlign: 'center',
+        fontSize: 24,
+        marginTop: 15
     }
 })

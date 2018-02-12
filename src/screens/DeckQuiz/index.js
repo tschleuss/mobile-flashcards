@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
 import ModalQuiz from '../ModalQuiz'
 import styles from './styles'
 
@@ -7,19 +8,23 @@ class DeckQuiz extends Component {
 
     constructor() {
         super()
-        this.state = { started: false, isFlipped: false }
+        this.state = {
+            started: false,
+            isFlipped: false
+        }
     }
 
     componentWillMount() {
-        this.image = (<Image resizeMode="contain" style={styles.logo} source={require('../../images/quiz.png')} />)
+        const imgUrl = require('../../images/quiz.png')
+        this.image = (<Image resizeMode="contain" style={styles.logo} source={imgUrl} />)
     }
 
     onCloseModal(result) {
-        this.setState(state => ({ started: false }))
+        this.setState({ started: false })
     }
 
     startQuiz() {
-        const { cards } = this.props.screenProps.deck
+        const { cards } = this.props.deck
         this.setState({ cards: cards.filter(c => c), started: true })
     }
 
@@ -50,4 +55,8 @@ class DeckQuiz extends Component {
     }
 }
 
-export default DeckQuiz
+const mapStateToProps = (decks, props) => ({
+    deck: decks.find(d => d.id === props.screenProps.deck.id)
+})
+
+export default connect(mapStateToProps)(DeckQuiz)

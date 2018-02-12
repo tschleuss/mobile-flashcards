@@ -44,7 +44,11 @@ export default StyleSheet.create({
         marginTop: 50
     },
     button: {
-        flex: 1,
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
         padding: 20,
         alignItems: 'center',
         justifyContent: 'center'
@@ -67,5 +71,12 @@ export default StyleSheet.create({
         fontSize: 18,
         color: '#354868',
         textAlign: 'center'
+    },
+    cancelButton: {
+        marginTop: 2
+    },
+    cancelIcon: {
+        color: '#32cdff',
+        fontWeight: 'bold'
     }
 })

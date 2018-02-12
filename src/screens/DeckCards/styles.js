@@ -1,6 +1,10 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
+    screenContainer: {
+        flex: 1,
+        backgroundColor: '#32cdff'
+    },
     addButton: {
         backgroundColor: '#354868',
         borderWidth: 0,
@@ -43,7 +47,7 @@ export default StyleSheet.create({
         right: 10
     },
     btnRemove: {
-        bottom: 10,
+        bottom: 10
     },
     iconRemove: {
         color: '#ff5635'
@@ -61,5 +65,20 @@ export default StyleSheet.create({
         fontSize: 18,
         color: '#bbb',
         textAlign: 'center'
+    },
+    emptyContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 30
+    },
+    emptyIcon: {
+        color: '#fff'
+    },
+    emptyText: {
+        color: '#fff',
+        textAlign: 'center',
+        fontSize: 24,
+        marginTop: 15
     }
 })

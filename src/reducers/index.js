@@ -1,53 +1,7 @@
 import * as ActionTypes from '../actions/actionTypes'
+import initialState from './state'
 
-const mockInitialState = [{
-        id: '1',
-        title: 'React',
-        cards: [{
-                id: '1',
-                question: 'What is React?',
-                answer: 'A library for managing user interfaces'
-            },
-            {
-                id: '2',
-                question: 'Where do you make Ajax requests in React?',
-                answer: 'The componentDidMount lifecycle event'
-            }
-        ]
-    },
-    {
-        id: '2',
-        title: 'JavaScript',
-        cards: [{
-                id: '1',
-                question: 'What is a closure?',
-                answer: 'The combination of a function and the lexical environment within which that function was declared.'
-            },
-            {
-                id: '2',
-                question: "What's a good reason to not use form element names that are the same as different element IDs?",
-                answer: 'IE 7 and earlier will accidently grab the form element with that name, instead of the element with that ID.'
-            },
-            {
-                id: '3',
-                question: 'For an Element type, what is an alias of .nodeName?',
-                answer: '.tagName;'
-            },
-            {
-                id: '4',
-                question: 'function f() { a=10; return; }What will this return?',
-                answer: 'undefined'
-            },
-            {
-                id: '5',
-                question: 'How do you convert a string to a number?',
-                answer: "Number('42');"
-            }
-        ]
-    }
-]
-
-function decks(state = mockInitialState, action) {
+function decks(state = initialState, action) {
 
     switch (action.type) {
 

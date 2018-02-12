@@ -1,11 +1,5 @@
 import React, { Component } from 'react'
-import {
-    FlatList,
-    Text,
-    View,
-    TouchableHighlight,
-    TouchableOpacity
-} from 'react-native'
+import { FlatList, Text, View, TouchableHighlight, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { Entypo } from '@expo/vector-icons'
 import { addDeck } from '../../actions/actionCreators'
@@ -72,8 +66,9 @@ class DeckList extends Component {
     render() {
         const { creating } = this.state
         const { decks } = this.props
+        const empty = decks.length === 0
         return (
-            <View style={{ backgroundColor: '#32cdff', flex: 1 }}>
+            <View style={styles.screenContainer}>
                 {creating && (
                     <ModalInput 
                         title={'Deck\'s name'}
@@ -82,13 +77,22 @@ class DeckList extends Component {
                         onCancel={() => this.onCancelCreating()}
                         onFinish={name => this.onFinishCreating(name)}/>
                 )}
-                <FlatList
-                    data={decks}
-                    extraData={this.state}
-                    keyExtractor={this.keyExtractor.bind(this)}
-                    renderItem={this.renderItem.bind(this)}
-                    style={styles.list}
-                />
+                {!empty ? (
+                    <FlatList
+                        data={decks}
+                        extraData={this.state}
+                        keyExtractor={this.keyExtractor.bind(this)}
+                        renderItem={this.renderItem.bind(this)}
+                        style={styles.list}
+                    />
+                ) : (
+                    <View style={styles.emptyContainer}>
+                        <Entypo name="emoji-flirt" size={120} style={styles.emptyIcon} />
+                        <Text style={styles.emptyText}>
+                            Seems that you don't have any deck yet! Start creating a new one tapping the plus button below.
+                        </Text>
+                    </View>
+                )}
                 <TouchableHighlight
                     style={styles.addButton}
                     underlayColor="#41567a"
