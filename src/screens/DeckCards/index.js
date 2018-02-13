@@ -73,7 +73,8 @@ class DeckCards extends Component {
      */
     onFinishEditing(question, answer) {
         const { deck } = this.props
-        this.props.saveCard(deck.id, { question, answer })
+        const { card } = this.state
+        this.props.saveCard(deck.id, { ...card, question, answer })
         this.setState({ editing: false })
     }
 
