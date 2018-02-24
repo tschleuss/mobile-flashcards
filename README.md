@@ -1,4 +1,6 @@
-# [React Nanodegree Project #3] Mobile Flashcards
+# Mobile Flashcards
+
+> Project #3 done for Udacity React Nanodegree.
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/tschleuss/mobile-flashcards/blob/master/LICENSE)
 
